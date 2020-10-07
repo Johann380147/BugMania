@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using BugMania.Models;
+using BugMania.DataContexts;
+using System.Web.Configuration;
 
 namespace BugMania
 {
@@ -59,9 +61,9 @@ namespace BugMania
             //   appSecret: "");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "872534200548-tm6lrqs9309e2kdr574od3j94qehm7md.apps.googleusercontent.com",
-                ClientSecret = "wc6mRYLuFb7HlixHhWSFZpK4"
+            {                
+                ClientId = WebConfigurationManager.AppSettings["GoogleClientId"],
+                ClientSecret = WebConfigurationManager.AppSettings["GoogleClientSecret"] 
             });
         }
     }
