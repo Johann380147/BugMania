@@ -1,3 +1,3 @@
 # BugMania
 
-BugMania.tk
+<http://BugMania.tk>
