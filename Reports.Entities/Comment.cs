@@ -19,6 +19,7 @@ namespace Reports.Entities
         [Required]
         public string Content { get; set; }
 
+        [Display(Name = "Date Posted")]
         public DateTime CommentDateTime { get; set; }
 
         [Required]

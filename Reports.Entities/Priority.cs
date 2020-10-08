@@ -19,6 +19,7 @@ namespace Reports.Entities
 
         [Required]
         [StringLength(256)]
+        [Display(Name="Priority")]
         public string Name { get; set; }
 
         public string Description { get; set; }

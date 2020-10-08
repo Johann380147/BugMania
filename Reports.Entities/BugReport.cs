@@ -25,26 +25,32 @@ namespace Reports.Entities
         public string Title { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required]
         [StringLength(128)]
+        [Display(Name ="Product")]
         public string ProductId { get; set; }
 
-        [Required]
+        
         [StringLength(128)]
         public string AuthorId { get; set; }
 
         [StringLength(128)]
+        [Display(Name = "Severity")]
         public string SeverityId { get; set; }
 
         [StringLength(128)]
+        [Display(Name = "Priority")]
         public string PriorityId { get; set; }
 
         [Required]
         [StringLength(128)]
+        [Display(Name = "Status")]
         public string StatusId { get; set; }
 
+        [Display(Name = "Date Posted")]
         public DateTime CreateDateTime { get; set; }
 
         public virtual Priority Priority { get; set; }

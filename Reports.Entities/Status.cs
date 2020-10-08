@@ -18,6 +18,7 @@ namespace Reports.Entities
 
         [Required]
         [StringLength(256)]
+        [Display(Name = "Status")]
         public string Name { get; set; }
 
         public string Description { get; set; }

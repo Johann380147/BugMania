@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using BugMania.DataContexts;
 using Reports.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace BugMania.Controllers
 {
@@ -53,10 +54,13 @@ namespace BugMania.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Description,ProductId,AuthorId,SeverityId,PriorityId,StatusId,CreateDateTime")] BugReport bugReport)
+        public async Task<ActionResult> Create([Bind(Include = "Title,Description,ProductId,SeverityId,PriorityId,StatusId")] BugReport bugReport)
         {
             if (ModelState.IsValid)
             {
+                bugReport.Id = System.Guid.NewGuid().ToString();
+                bugReport.AuthorId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                bugReport.CreateDateTime = DateTime.Now;
                 db.BugReports.Add(bugReport);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

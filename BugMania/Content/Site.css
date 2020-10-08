@@ -9,8 +9,12 @@ body {
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    margin: 5%;
+}
+
+.div-zero-margin {
+    margin:0px;
+    padding:0px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -24,5 +28,121 @@ body {
 input,
 select,
 textarea {
+    width:75%;
+}
+
+.max-width-75 {
+    max-width: 75%
+}
+
+.width-75 {
+    width: 75%
+}
+
+.btn-icon {
+    margin-right: 5px;
+}
+
+.divider {
+    border-top: 2px solid #252525;
+}
+
+.navbar-custom {
+    background-color: #1d86dd;
+    color: #fff;
+}
+
+.navbar-brand,
+.navbar-nav li > * {
+    color: #fff;
+}
+
+.navbar-header > *:hover {
+    background-color: #1469af;
+    color: #fff;
+}
+
+ul.navbar-nav li a:hover {
+    background-color: #1469af;
+    color: #fff;
+}
+
+.icon-bar {
+    background-color:#fff;
+    color:#fff;
+}
+
+.pos_mid {
+    transform:translate(-50%, -50%);
+}
+
+.main-table-data {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.main-table-data-row-container:hover {
+    background-color:#cbe6fc;
+}
+
+.main-table-data-row-container: {
+    background-color: #add6f7;
+}
+
+.main-table-data-title-link {
+    width: 70%;
+    color: #000;
+}
+
+.main-table-data-title-link:link,
+.main-table-data-title-link:hover,
+.main-table-data-title-link:visited,
+.main-table-data-title-link:active {
+    text-decoration: none;
+    color: #000;
+}
+
+.btn-link-text:link,
+.btn-link-text:hover,
+.btn-link-text:visited,
+.btn-link-text:active {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-std {
+    width: 100px;
+}
+
+.searchbox {
     max-width: 280px;
+}
+
+textarea {
+    font-family: inherit;
+    resize: none;
+    overflow: auto;
+}
+
+label {
+    color:#808080;
+}
+
+.m-l-10 {
+    margin-left: 10%;
+}
+
+.m-r-10 {
+    margin-right: 10%;
+}
+
+.m-lr-10 {
+    margin-left:10%;
+    margin-right:10%;
+}
+
+.m-tb-10 {
+    margin-top:10%;
+    margin-bottom:10%;
 }
