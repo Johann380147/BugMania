@@ -11,10 +11,14 @@ namespace Reports.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Comment()
         {
-            BugReports = new HashSet<BugReport>();
+            
         }
 
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public int BugReportId { get; set; }
 
         [Required]
         public string Content { get; set; }
@@ -25,8 +29,11 @@ namespace Reports.Entities
         [Required]
         [StringLength(128)]
         public string UserId { get; set; }
+        
+        [Required]
+        public BugReport BugReport { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BugReport> BugReports { get; set; }
+
+        public ApplicationUser Commenter { get; set; }
     }
 }

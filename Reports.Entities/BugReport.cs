@@ -6,19 +6,19 @@ namespace Reports.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("BugReport")]
     public partial class BugReport
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BugReport()
         {
-            BugReportAssignees = new HashSet<BugReportAssignee>();
-            BugReportSubscribers = new HashSet<BugReportSubscriber>();
             Comments = new HashSet<Comment>();
             Tags = new HashSet<Tag>();
+            Subscribers = new HashSet<ApplicationUser>();
+            Assignees = new HashSet<ApplicationUser>();
         }
 
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -29,48 +29,45 @@ namespace Reports.Entities
         public string Description { get; set; }
 
         [Required]
-        [StringLength(128)]
         [Display(Name ="Product")]
-        public string ProductId { get; set; }
-
+        public int ProductId { get; set; }
         
         [StringLength(128)]
         public string AuthorId { get; set; }
-
-        [StringLength(128)]
+        
         [Display(Name = "Severity")]
-        public string SeverityId { get; set; }
-
-        [StringLength(128)]
+        public int SeverityId { get; set; }
+        
         [Display(Name = "Priority")]
-        public string PriorityId { get; set; }
+        public int PriorityId { get; set; }
 
         [Required]
-        [StringLength(128)]
         [Display(Name = "Status")]
-        public string StatusId { get; set; }
+        public int StatusId { get; set; }
 
         [Display(Name = "Date Posted")]
         public DateTime CreateDateTime { get; set; }
 
-        public virtual Priority Priority { get; set; }
+        public Priority Priority { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
 
-        public virtual Severity Severity { get; set; }
+        public Severity Severity { get; set; }
 
-        public virtual Status Status { get; set; }
+        public Status Status { get; set; }
+
+        public ApplicationUser Author { get; set; }
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public ICollection<Comment> Comments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BugReportAssignee> BugReportAssignees { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BugReportSubscriber> BugReportSubscribers { get; set; }
+        public ICollection<ApplicationUser> Subscribers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tag> Tags { get; set; }
+        public ICollection<ApplicationUser> Assignees { get; set; }
     }
 }

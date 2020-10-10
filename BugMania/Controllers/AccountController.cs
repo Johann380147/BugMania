@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugMania.Models;
+using Reports.Entities;
 
 namespace BugMania.Controllers
 {
@@ -17,15 +18,17 @@ namespace BugMania.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -49,6 +52,18 @@ namespace BugMania.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
             }
         }
 
@@ -151,7 +166,7 @@ namespace BugMania.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsDeleted = false };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -421,6 +436,81 @@ namespace BugMania.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        [AllowAnonymous]
+        [Route("users/{id:guid}/roles")]
+        [HttpPost]
+        public async Task<ActionResult> AssignRolesToUser(string id, string[] rolesToAssign)
+        {
+            if (rolesToAssign == null)
+            {
+                return View("Error");
+            }
+
+            ///find the user we want to assign roles to
+            var appUser = await this.UserManager.FindByIdAsync(id);
+
+            if (appUser == null || appUser.IsDeleted)
+            {
+                return View("Error");
+            }
+
+            ///check if the user currently has any roles
+            var currentRoles = await this.UserManager.GetRolesAsync(appUser.Id);
+
+
+            var rolesNotExist = rolesToAssign.Except(this.RoleManager.Roles.Select(x => x.Name)).ToArray();
+
+            if (rolesNotExist.Count() > 0)
+            {
+                ModelState.AddModelError("", string.Format("Roles '{0}' does not exist in the system", string.Join(",", rolesNotExist)));
+                return View("Error");
+            }
+
+            ///remove user from current roles, if any
+            IdentityResult removeResult = await this.UserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+
+
+            if (!removeResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to remove user roles");
+                return View("Error");
+            }
+
+            ///assign user to the new roles
+            IdentityResult addResult = await this.UserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+
+            if (!addResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to add user roles");
+                return View("Error");
+            }
+
+            //return new { userId = id, rolesAssigned = rolesToAssign };
+            return null;
+        }
+
+        [AllowAnonymous]
+        [HttpPost, ActionName("Delete")]
+        [Route("user/{id:guid}")]
+        public Task<ActionResult> DeleteUser(string id)
+        {
+            //check if such a user exists in the database
+            var userToDelete = this.UserManager.FindById(id);
+            if (userToDelete == null)
+            {
+                
+            }
+            else if (userToDelete.IsDeleted)
+            {
+                
+            }
+            else
+            {
+                
+            }
+            return null;
         }
 
         #region Helpers

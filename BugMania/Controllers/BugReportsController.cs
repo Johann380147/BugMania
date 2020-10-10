@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using BugMania.DataContexts;
 using Reports.Entities;
 using Microsoft.AspNet.Identity;
+using BugMania.Models;
+using BugMania.Helpers;
 
 namespace BugMania.Controllers
 {
@@ -20,7 +22,7 @@ namespace BugMania.Controllers
         // GET: BugReports
         public async Task<ActionResult> Index()
         {
-            var bugReports = db.BugReports.Include(b => b.Priority).Include(b => b.Product).Include(b => b.Severity).Include(b => b.Status);
+            var bugReports = db.BugReports.Include(b => b.Priority).Include(b => b.Product).Include(b => b.Severity).Include(b => b.Status).Include(b => b.Tags);
             return View(await bugReports.ToListAsync());
         }
 
@@ -42,11 +44,14 @@ namespace BugMania.Controllers
         // GET: BugReports/Create
         public ActionResult Create()
         {
+            CreateBugReportViewModel model = new CreateBugReportViewModel();
+
             ViewBag.PriorityId = new SelectList(db.Priorities, "Id", "Name");
             ViewBag.ProductId = new SelectList(db.Products, "Id", "Name");
             ViewBag.SeverityId = new SelectList(db.Severities, "Id", "Name");
             ViewBag.StatusId = new SelectList(db.Status, "Id", "Name");
-            return View();
+            ViewBag.Tags = new SelectList(db.Tags, "Id", "Name");
+            return View(model);
         }
 
         // POST: BugReports/Create
@@ -54,23 +59,41 @@ namespace BugMania.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Title,Description,ProductId,SeverityId,PriorityId,StatusId")] BugReport bugReport)
+        public async Task<ActionResult> Create([Bind(Include = "Title,Description,ProductId,SeverityId,PriorityId,Tags")] CreateBugReportViewModel createBugReportModel)
         {
             if (ModelState.IsValid)
             {
-                bugReport.Id = System.Guid.NewGuid().ToString();
+                BugReport bugReport = new BugReport();
                 bugReport.AuthorId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 bugReport.CreateDateTime = DateTime.Now;
+                bugReport.Title = createBugReportModel.Title;
+                bugReport.Description = createBugReportModel.Description;
+                bugReport.ProductId = createBugReportModel.ProductId;
+                bugReport.SeverityId= createBugReportModel.SeverityId;
+                bugReport.PriorityId= createBugReportModel.PriorityId;
+                bugReport.StatusId = 1;
+
+                foreach (var tag in createBugReportModel.Tags)
+                {
+                    var _t = db.Tags.Where(a => a.Id == tag.Id).Single();
+
+                    if (_t != null)
+                    {
+                        bugReport.Tags.Add(_t);
+                    }
+                }
+
                 db.BugReports.Add(bugReport);
                 await db.SaveChangesAsync();
+                
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PriorityId = new SelectList(db.Priorities, "Id", "Name", bugReport.PriorityId);
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name", bugReport.ProductId);
-            ViewBag.SeverityId = new SelectList(db.Severities, "Id", "Name", bugReport.SeverityId);
-            ViewBag.StatusId = new SelectList(db.Status, "Id", "Name", bugReport.StatusId);
-            return View(bugReport);
+            ViewBag.PriorityId = new SelectList(db.Priorities, "Id", "Name", createBugReportModel.PriorityId);
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name", createBugReportModel.ProductId);
+            ViewBag.SeverityId = new SelectList(db.Severities, "Id", "Name", createBugReportModel.SeverityId);
+            ViewBag.Tags = new SelectList(db.Tags, "Id", "Name");
+            return View(createBugReportModel);
         }
 
         // GET: BugReports/Edit/5

@@ -15,7 +15,8 @@ namespace Reports.Entities
             Groups = new HashSet<Group>();
         }
 
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -25,9 +26,9 @@ namespace Reports.Entities
         public string Description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BugReport> BugReports { get; set; }
+        public ICollection<BugReport> BugReports { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups { get; set; }
+        public ICollection<Group> Groups { get; set; }
     }
 }

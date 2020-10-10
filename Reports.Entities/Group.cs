@@ -11,10 +11,11 @@ namespace Reports.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
         {
-            GroupMembers = new HashSet<GroupMember>();
+            Members = new HashSet<ApplicationUser>();
         }
 
-        public string Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -22,12 +23,12 @@ namespace Reports.Entities
         public string Name { get; set; }
 
         [Required]
-        [StringLength(128)]
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
+
+        [Required]
+        public Product Product { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GroupMember> GroupMembers { get; set; }
-
-        public virtual Product Product { get; set; }
+        public ICollection<ApplicationUser> Members { get; set; }
     }
 }
