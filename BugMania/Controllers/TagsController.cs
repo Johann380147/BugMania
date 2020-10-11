@@ -40,7 +40,7 @@ namespace BugMania.Controllers
         // GET: Tags/Create
         public ActionResult Create()
         {
-            return PartialView("_Create");
+            return PartialView("_CreateTag");
         }
 
         // POST: Tags/Create

@@ -35,6 +35,7 @@ namespace BugMania.Models
 
         public DetailsBugReportViewModel(BugReport bugReport)
         {
+            this.Id = bugReport.Id;
             this.Title = bugReport.Title;
             this.Description = bugReport.Description;
             this.Product = bugReport.Product;
@@ -47,6 +48,9 @@ namespace BugMania.Models
             this.Comments= bugReport.Comments;
             this.Assignees = bugReport.Assignees;
         }
+        
+        [Key]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -73,5 +77,21 @@ namespace BugMania.Models
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<ApplicationUser> Assignees { get; set; }
+
+
+        public ICollection<Comment> getCommentsDescending
+        {
+            get { return Comments.OrderByDescending(c => c.CommentDateTime).ToList(); }
+        }
+    }
+
+    public class CreateCommentViewModel
+    {
+        [Required]
+        public int BugReportId { get; set; }
+
+        [Required]
+        public string Content { get; set; }
+
     }
 }

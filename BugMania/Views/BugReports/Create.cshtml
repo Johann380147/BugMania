@@ -10,8 +10,15 @@
 }
 
 
-<h2 class="p-l-15-vh">New Bug Report</h2>
-<hr class="m-tb-50" />
+@Html.ActionLink(" ", "Index", null,
+    new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
+        Title = "Back" })
+
+<div class="m-b-10p">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 general-header">New Bug Report</div>
+</div>
+
 
 
 @using (Html.BeginForm("Create", "BugReports", FormMethod.Post, new { @id = "createBugReportForm" }))
@@ -98,7 +105,7 @@
                 <h4 class="modal-title">Create Tag</h4>
             </div>
             <div class="modal-body">
-                @Html.Partial("_Create")
+                @Html.Partial("_CreateTag")
                 <div class="modal-footer">
                     <button type="button" id="btnHideTagModal" class="btn btn-danger btn-std pull-left">Close</button>
                     <button type="button" id="btnCreateTag" class="btn btn-info btn-std">Create</button>

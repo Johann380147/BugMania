@@ -15,17 +15,22 @@ using BugMania.Helpers;
 
 namespace BugMania.Controllers
 {
+    [Authorize]
     public class BugReportsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: BugReports/<SearchCriteria>
+        [AllowAnonymous]
         public async Task<ActionResult> Index(string filter)
         {
+            IQueryable<BugReport> bugReports;
             // Find - gets local, SingleOrDefault - force get from DB
+            // .Include loads associated data from parent table into child object
             if (!String.IsNullOrEmpty(filter))
             {
-                var bugReports = db.BugReports.Where(
+                ViewBag.Filters = filter;
+                bugReports = db.BugReports.Where(
                     b => b.Title.Contains(filter) ||
                     b.Description.Contains(filter) ||
                     b.Tags.Any(t => t.Name.Contains(filter)))
@@ -34,21 +39,31 @@ namespace BugMania.Controllers
                     .Include(b => b.Severity)
                     .Include(b => b.Status)
                     .Include(b => b.Tags);
-                return View(await bugReports.ToListAsync());
             }
             else
             {
-                var bugReports = db.BugReports
+                bugReports = db.BugReports
                     .Include(b => b.Priority)
                     .Include(b => b.Product)
                     .Include(b => b.Severity)
                     .Include(b => b.Status)
                     .Include(b => b.Tags);
-                return View(await bugReports.ToListAsync());
+            }
+
+            var result = await bugReports.ToListAsync();
+            if (result != null)
+            {
+                var sorted = result.OrderByDescending(t => t.CreateDateTime).ToList();
+                return View(sorted);
+            }
+            else
+            {
+                return View(result);
             }
         }
 
         // GET: BugReports/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int id)
         {
             if (id == null)
@@ -107,11 +122,6 @@ namespace BugMania.Controllers
                 bugReport.SeverityId= createBugReportModel.SeverityId;
                 bugReport.PriorityId= createBugReportModel.PriorityId;
                 bugReport.StatusId = 1; // Status: NEW
-
-                bugReport.Product = db.Products.Where(a => a.Id == createBugReportModel.ProductId).Single();
-                bugReport.Severity = db.Severities.Where(a => a.Id == createBugReportModel.SeverityId).Single();
-                bugReport.Priority = db.Priorities.Where(a => a.Id == createBugReportModel.PriorityId).Single();
-                bugReport.Status = db.Status.Where(a => a.Id == 1).Single();
 
                 foreach (var tag in createBugReportModel.Tags)
                 {

@@ -26,11 +26,9 @@ namespace Reports.Entities
         [Display(Name = "Date Posted")]
         public DateTime CommentDateTime { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string UserId { get; set; }
         
-        [Required]
         public BugReport BugReport { get; set; }
 
 
