@@ -9,11 +9,6 @@ namespace BugMania.Models
 {
     public class CreateBugReportViewModel
     {
-        public CreateBugReportViewModel()
-        {
-            Tags = new HashSet<Tag>();
-        }
-
         [Required]
         [StringLength(256)]
         public string Title { get; set; }
@@ -33,5 +28,50 @@ namespace BugMania.Models
         public int PriorityId { get; set; }
                 
         public ICollection<Tag> Tags { get; set; }
+    }
+
+    public class DetailsBugReportViewModel
+    {
+
+        public DetailsBugReportViewModel(BugReport bugReport)
+        {
+            this.Title = bugReport.Title;
+            this.Description = bugReport.Description;
+            this.Product = bugReport.Product;
+            this.Author= bugReport.Author;
+            this.Priority = bugReport.Priority;
+            this.Severity = bugReport.Severity;
+            this.Status = bugReport.Status;
+            this.CreateDateTime = bugReport.CreateDateTime;
+            this.Tags = bugReport.Tags;
+            this.Comments= bugReport.Comments;
+            this.Assignees = bugReport.Assignees;
+        }
+
+        [Required]
+        [StringLength(256)]
+        public string Title { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
+        public Product Product { get; set; }
+
+        public ApplicationUser Author { get; set; }
+
+        public Priority Priority { get; set; }
+
+        public Severity Severity { get; set; }
+
+        public Status Status { get; set; }
+
+        public DateTime CreateDateTime { get; set; }
+
+        public ICollection<Tag> Tags { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<ApplicationUser> Assignees { get; set; }
     }
 }

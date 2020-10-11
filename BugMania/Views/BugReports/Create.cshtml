@@ -7,10 +7,11 @@
                         "1.\n\n" +
                         "**Expected Result:**\n\n\n" +
                         "**Actual Result:**";
-    var SelectedTags = new List<string>();
 }
 
-<h2>New Bug Report</h2>
+
+<h2 class="p-l-15-vh">New Bug Report</h2>
+<hr class="m-tb-50" />
 
 
 @using (Html.BeginForm("Create", "BugReports", FormMethod.Post, new { @id = "createBugReportForm" }))
@@ -18,7 +19,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -59,28 +59,28 @@
                 @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.Tags, "Tags", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-5">
                 @Html.DropDownList("Tags", null, htmlAttributes: new { @id = "tagDropDownList", @class = "form-control" })
             </div>
             <div class="col-md-3">
-                <span id="btnShowTagModal" class="btn btn-success glyphicon btn-link-text pull-left">+</span>
+                <span id="btnShowTagModal" class="btn btn-success glyphicon btn-link-text color-white pull-left">+</span>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-2"></div>
             <div id="tagList" class="col-md-10 min-height-40"></div>
         </div>
-        
+
         <div>
             <div class="col-md-2"></div>
             <div class="col-md-10 div-zero-margin p-l-5">
-                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-link-text btn-danger btn-std" })
-                <button type="button"  id="btn-createBugReport" class="btn btn-info btn-std pull-right">Create</button>
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-link-text color-white btn-danger btn-std" })
+                <button type="button" id="btn-createBugReport" class="btn btn-info btn-std pull-right">Create</button>
             </div>
-            
+
         </div>
     </div>
 }
@@ -124,7 +124,7 @@
             // Submit Create Bug Report Form
             //$('#createBugReportForm').submit(function (e) {
             $('#btn-createBugReport').click(function () {
-                
+
                 var data = {
                     Title: $("#createBrTitle").val(),
                     Description: $("#createBrDesc").val(),
@@ -183,7 +183,7 @@
                 var parent = document.getElementById("tagList");
 
                 if (parent == null || name == "") return;
-                
+
                 for (let child of Array.from(parent.children)) {
                     if (child.id == name) {
                         isNew = false;
@@ -208,7 +208,7 @@
                 if (child != null && parent != null) {
                     parent.removeChild(child);
                 }
-            }    
+            }
 
             function getCollectionOfTags() {
                 var arr = [];
@@ -220,6 +220,16 @@
                         Description: ""
                     });
                 }
+                if (arr.length == 0) {
+                    var selectList = document.getElementById("tagDropDownList");
+                    arr.push({
+                        Id: selectList.value,
+                        // Only the value can be fetched
+                        Name: "temp",
+                        Description: ""
+                    });
+                }
+
                 return arr;
             }
         });

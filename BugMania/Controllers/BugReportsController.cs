@@ -19,26 +19,61 @@ namespace BugMania.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: BugReports
-        public async Task<ActionResult> Index()
+        // GET: BugReports/<SearchCriteria>
+        public async Task<ActionResult> Index(string filter)
         {
-            var bugReports = db.BugReports.Include(b => b.Priority).Include(b => b.Product).Include(b => b.Severity).Include(b => b.Status).Include(b => b.Tags);
-            return View(await bugReports.ToListAsync());
+            // Find - gets local, SingleOrDefault - force get from DB
+            if (!String.IsNullOrEmpty(filter))
+            {
+                var bugReports = db.BugReports.Where(
+                    b => b.Title.Contains(filter) ||
+                    b.Description.Contains(filter) ||
+                    b.Tags.Any(t => t.Name.Contains(filter)))
+                    .Include(b => b.Priority)
+                    .Include(b => b.Product)
+                    .Include(b => b.Severity)
+                    .Include(b => b.Status)
+                    .Include(b => b.Tags);
+                return View(await bugReports.ToListAsync());
+            }
+            else
+            {
+                var bugReports = db.BugReports
+                    .Include(b => b.Priority)
+                    .Include(b => b.Product)
+                    .Include(b => b.Severity)
+                    .Include(b => b.Status)
+                    .Include(b => b.Tags);
+                return View(await bugReports.ToListAsync());
+            }
         }
 
         // GET: BugReports/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = await db.BugReports.FindAsync(id);
+            BugReport bugReport = db.BugReports
+                                    .Include(b => b.Product)
+                                    .Include(b => b.Author)
+                                    .Include(b => b.Severity)
+                                    .Include(b => b.Priority)
+                                    .Include(b => b.Status)
+                                    .Include(b => b.Tags)
+                                    .Include(b => b.Comments)
+                                    .Include(b => b.Assignees)
+                                    .SingleOrDefault(b => b.Id == id);
+            
             if (bugReport == null)
             {
                 return HttpNotFound();
             }
-            return View(bugReport);
+
+            DetailsBugReportViewModel detailsModel = new DetailsBugReportViewModel(bugReport);
+
+            return View(detailsModel);
         }
 
         // GET: BugReports/Create
@@ -71,7 +106,12 @@ namespace BugMania.Controllers
                 bugReport.ProductId = createBugReportModel.ProductId;
                 bugReport.SeverityId= createBugReportModel.SeverityId;
                 bugReport.PriorityId= createBugReportModel.PriorityId;
-                bugReport.StatusId = 1;
+                bugReport.StatusId = 1; // Status: NEW
+
+                bugReport.Product = db.Products.Where(a => a.Id == createBugReportModel.ProductId).Single();
+                bugReport.Severity = db.Severities.Where(a => a.Id == createBugReportModel.SeverityId).Single();
+                bugReport.Priority = db.Priorities.Where(a => a.Id == createBugReportModel.PriorityId).Single();
+                bugReport.Status = db.Status.Where(a => a.Id == 1).Single();
 
                 foreach (var tag in createBugReportModel.Tags)
                 {
@@ -97,7 +137,7 @@ namespace BugMania.Controllers
         }
 
         // GET: BugReports/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -136,7 +176,7 @@ namespace BugMania.Controllers
         }
 
         // GET: BugReports/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -153,7 +193,7 @@ namespace BugMania.Controllers
         // POST: BugReports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             BugReport bugReport = await db.BugReports.FindAsync(id);
             db.BugReports.Remove(bugReport);

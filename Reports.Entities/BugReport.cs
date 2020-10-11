@@ -47,12 +47,12 @@ namespace Reports.Entities
 
         [Display(Name = "Date Posted")]
         public DateTime CreateDateTime { get; set; }
-
-        public Priority Priority { get; set; }
-
+        
         public Product Product { get; set; }
 
         public Severity Severity { get; set; }
+
+        public Priority Priority { get; set; }
 
         public Status Status { get; set; }
 

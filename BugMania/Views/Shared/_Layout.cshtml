@@ -33,13 +33,13 @@
             @Html.Partial("_LoginPartial")
         </div>
     </div>
-    <div class="container-fluid body-content scrollbox">
+    <div class="container-fluid body-content">
         @RenderBody()
     </div>
 
-    <div class="panel-footer navbar-fixed-bottom">
+    @*<div class="panel-footer navbar-fixed-bottom">
         <p>&copy; @DateTime.Now.Year - BugMania</p>
-    </div>
+    </div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
