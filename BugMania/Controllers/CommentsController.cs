@@ -43,7 +43,7 @@ namespace BugMania.Controllers
         // GET: Comments/Create
         public ActionResult Create()
         {
-            return View();
+            return RedirectToAction("Index","BugReports");
         }
 
         // POST: Comments/Create
@@ -60,7 +60,7 @@ namespace BugMania.Controllers
                 comment.BugReportId = createCommentViewModel.BugReportId;
                 comment.Content = createCommentViewModel.Content;
                 comment.UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                comment.CommentDateTime = DateTime.Now;
+                comment.CommentDateTime = DateTime.UtcNow;
 
                 var _c = db.BugReports.Where(a => a.Id == comment.BugReportId).Single();
 

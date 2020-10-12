@@ -2,11 +2,11 @@
 
 
 
-
 @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
 {
+
     @Html.AntiForgeryToken()
-    
+
     <div class="create-comment-container">
         <div>
             <input type="hidden" name="BugReportId" id="BugReportId" value=@ViewData["BugReportId"] />

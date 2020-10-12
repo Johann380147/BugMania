@@ -43,7 +43,7 @@
                 by
                 @Html.DisplayFor(model => model.Author.UserName, new { @class = "" })
             </label>
-            
+
         </div>
     </div>
     <div class="m-t-10">
@@ -56,38 +56,33 @@
     </div>
 </div>
 
-@*@Html.Partial("_CreateComment", new CreateCommentViewModel(), new ViewDataDictionary(ViewData)
-    {
-        TemplateInfo = new System.Web.Mvc.TemplateInfo
-        {
-            HtmlFieldPrefix = "ValueToSend"
-        }
-    });*@
+
 
 @Html.Partial("_CreateComment", new CreateCommentViewModel(), new ViewDataDictionary(ViewData)
-{{
-        "BugReportId", Model.Id
-}})
+{
+    { "BugReportId", Model.Id }
+})
+
 
 <div class="comments-container">
     @foreach (var comment in Model.getCommentsDescending)
     {
-    <div class="comment-card">
-        <div class="comment-profile">
-            <img class="profile-picture" src="~/Content/Images/default-profile.png" />
-            <div class="profile-user">
-                @Html.DisplayFor(model => comment.Commenter.UserName, new { @class = "" })
+        <div class="comment-card">
+            <div class="comment-profile">
+                <img class="profile-picture" src="~/Content/Images/default-profile.png" />
+                <div class="profile-user">
+                    @Html.DisplayFor(model => comment.Commenter.UserName, new { @class = "" })
+                </div>
+            </div>
+            <div class="comment-content">
+                <div class="comment-body">
+                    @Html.DisplayFor(model => comment.Content, new { @class = "" })
+                </div>
+                <div class="comment-time">
+                    <label>@DateTimeHelpers.GetRelativeTimePassed(comment.CommentDateTime, "Commented")</label>
+                </div>
             </div>
         </div>
-        <div class="comment-content">
-            <div class="comment-body">
-                @Html.DisplayFor(model => comment.Content, new { @class = "" })
-            </div>
-            <div class="comment-time">
-                <label>@DateTimeHelpers.GetRelativeTimePassed(comment.CommentDateTime, "Commented")</label>
-            </div>
-        </div>
-    </div>
     }
 
 </div>

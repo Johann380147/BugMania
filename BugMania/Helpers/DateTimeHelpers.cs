@@ -15,7 +15,7 @@ namespace BugMania.Helpers
 
         public static string GetRelativeTimePassed(DateTime dateTime, string prefix = "Posted")
         {
-            var ts = new TimeSpan(DateTime.Now.Ticks - dateTime.Ticks);
+            var ts = new TimeSpan(DateTime.UtcNow.Ticks - dateTime.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
             prefix = prefix + " ";
 

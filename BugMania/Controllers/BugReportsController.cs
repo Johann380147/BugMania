@@ -115,7 +115,7 @@ namespace BugMania.Controllers
             {
                 BugReport bugReport = new BugReport();
                 bugReport.AuthorId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                bugReport.CreateDateTime = DateTime.Now;
+                bugReport.CreateDateTime = DateTime.UtcNow;
                 bugReport.Title = createBugReportModel.Title;
                 bugReport.Description = createBugReportModel.Description;
                 bugReport.ProductId = createBugReportModel.ProductId;
