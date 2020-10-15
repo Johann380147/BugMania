@@ -8,7 +8,7 @@ using Owin;
 using BugMania.Models;
 using BugMania.DataContexts;
 using System.Web.Configuration;
-using Reports.Entities;
+using BugMania.Shapes;
 
 namespace BugMania
 {

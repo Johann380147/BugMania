@@ -6,10 +6,33 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        <li class="dropdown">
+            <a href="#" 
+               class="dropdown-toggle"
+               data-toggle="dropdown" 
+               role="button" 
+               aria-haspopup="true" 
+               aria-expanded="false">
+            @User.Identity.GetUserName() 
+            <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+
+                <li>
+                    @Html.ActionLink("Groups", "View", "ViewGroup", routeValues: null, htmlAttributes: new { title = "Groups" })
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        @Html.ActionLink("Roles", "Assign", "AssignAccountRole", routeValues: null, htmlAttributes: new { title = "Roles" })
+                    </li>
+                }
+                <li><span class="custom-divider"></span></li>
+                <li>@Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
         </li>
-        <li class="nav-item"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li class="nav-item"></li>
     </ul>
     }
 }

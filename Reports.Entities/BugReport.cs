@@ -1,4 +1,4 @@
-namespace Reports.Entities
+namespace BugMania.Shapes
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace Reports.Entities
             Tags = new HashSet<Tag>();
             Subscribers = new HashSet<ApplicationUser>();
             Assignees = new HashSet<ApplicationUser>();
+            EditLog = new HashSet<Log>();
         }
 
         [Key]
@@ -47,7 +48,10 @@ namespace Reports.Entities
 
         [Display(Name = "Date Posted")]
         public DateTime CreateDateTime { get; set; }
-        
+
+        [Display(Name = "Edited on")]
+        public DateTime? LastEditDateTime { get; set; }
+
         public Product Product { get; set; }
 
         public Severity Severity { get; set; }
@@ -69,5 +73,8 @@ namespace Reports.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<ApplicationUser> Assignees { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public ICollection<Log> EditLog { get; set; }
     }
 }

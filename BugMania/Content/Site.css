@@ -4,8 +4,7 @@
 }
 
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    overflow:hidden;
 }
 
 textarea {
@@ -27,7 +26,10 @@ textarea {
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    margin: 5%;
+    margin-top: 50px;
+    padding-top: 5%;
+    padding-bottom:7%;
+    overflow-y:scroll;
     height:100%;
 }
 
@@ -92,8 +94,8 @@ ul.navbar-nav li a:hover {
 }
 
 .icon-bar {
-    background-color:#fff;
-    color:#fff;
+    background-color: #fff;
+    color: #fff;
 }
 
 .pos_mid {
@@ -309,15 +311,22 @@ hr {
 
 .report-body {
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     font-size:15px;
     color:#404040;
 }
 
-.report-footer {
+.report-footer-post {
     position: absolute;
     bottom: 0;
     font-size:11px;
+}
+
+.report-footer-edit {
+    position: absolute;
+    bottom: 0px;
+    right:20px;
+    font-size: 11px;
 }
 
 .comment-container {
@@ -343,6 +352,7 @@ hr {
 .profile-picture {
     display:block;
     width: 100%;
+    min-width:150px;
     max-width: 150px;
     height: auto;
     flex:0;
@@ -601,6 +611,10 @@ hr {
 
 .m-t-20 {
     margin-top: 20px;
+}
+
+.m-l-20-p {
+    margin-left: 20%;
 }
 
 .m-b-10 {

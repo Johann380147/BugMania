@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugMania.Models;
-using Reports.Entities;
+using BugMania.Shapes;
 
 namespace BugMania.Controllers
 {
@@ -178,7 +178,7 @@ namespace BugMania.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "BugReports");
+                    return RedirectToAction("View", "ViewAllBugReport");
                 }
                 AddErrors(result);
             }
@@ -407,7 +407,7 @@ namespace BugMania.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "BugReports");
+            return RedirectToAction("View", "ViewAllBugReport");
         }
 
         //
@@ -539,7 +539,7 @@ namespace BugMania.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "BugReports");
+            return RedirectToAction("View", "ViewAllBugReport");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

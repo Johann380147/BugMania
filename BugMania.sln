@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugMania", "BugMania\BugMania.csproj", "{4CECB42E-2C25-46A9-8B7B-5EEF41C572EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports.Entities", "Reports.Entities\Reports.Entities.csproj", "{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugMania.Shapes", "Reports.Entities\BugMania.Shapes.csproj", "{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-namespace Reports.Entities
+namespace BugMania.Shapes
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Reports.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
         {
-            Members = new HashSet<ApplicationUser>();
+            GroupMembers = new HashSet<GroupMember>();
         }
 
         [Key]
@@ -25,10 +25,9 @@ namespace Reports.Entities
         [Required]
         public int ProductId { get; set; }
 
-        [Required]
         public Product Product { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<ApplicationUser> Members { get; set; }
+        public ICollection<GroupMember> GroupMembers { get; set; }
     }
 }

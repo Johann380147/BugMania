@@ -6,7 +6,7 @@
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
     using System.Linq;
-    using Reports.Entities;
+    using BugMania.Shapes;
 
 
     internal sealed class Configuration : DbMigrationsConfiguration<BugMania.DataContexts.ApplicationDbContext>
@@ -22,57 +22,57 @@
             try
             {
                 // Tags
-                IList<Tag> defaultTags = new List<Tag>();
+                //IList<Tag> defaultTags = new List<Tag>();
 
-                defaultTags.Add(new Tag() { Name = "C#", Description = "" });
-                defaultTags.Add(new Tag() { Name = "ASP.net", Description = "" });
-                defaultTags.Add(new Tag() { Name = "Wicked", Description = "" });
+                //defaultTags.Add(new Tag() { Name = "C#", Description = "" });
+                //defaultTags.Add(new Tag() { Name = "ASP.net", Description = "" });
+                //defaultTags.Add(new Tag() { Name = "Wicked", Description = "" });
 
-                context.Tags.AddOrUpdate(defaultTags.Cast<Tag>().ToArray());
+                //context.Tags.AddOrUpdate(defaultTags.Cast<Tag>().ToArray());
 
-                // Status
-                IList<Status> defaultStatus = new List<Status>();
+                //// Status
+                //IList<Status> defaultStatus = new List<Status>();
 
-                defaultStatus.Add(new Status() { Name = "NEW", Description = "" });
-                defaultStatus.Add(new Status() { Name = "ASSIGNED", Description = "" });
-                defaultStatus.Add(new Status() { Name = "UNVERIFIED_FIXED", Description = "" });
-                defaultStatus.Add(new Status() { Name = "VERIFIED_FIXED", Description = "" });
-                defaultStatus.Add(new Status() { Name = "INVALID", Description = "" });
-                defaultStatus.Add(new Status() { Name = "DUPLICATE", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "NEW", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "ASSIGNED", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "UNVERIFIED_FIXED", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "VERIFIED_FIXED", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "INVALID", Description = "" });
+                //defaultStatus.Add(new Status() { Name = "DUPLICATE", Description = "" });
 
-                context.Status.AddOrUpdate(defaultStatus.Cast<Status>().ToArray());
+                //context.Status.AddOrUpdate(defaultStatus.Cast<Status>().ToArray());
 
-                // Severity
-                IList<Severity> defaultSeverity = new List<Severity>();
+                //// Severity
+                //IList<Severity> defaultSeverity = new List<Severity>();
 
-                defaultSeverity.Add(new Severity() { Name = "Low", Description = "" });
-                defaultSeverity.Add(new Severity() { Name = "Minor", Description = "" });
-                defaultSeverity.Add(new Severity() { Name = "Major", Description = "" });
-                defaultSeverity.Add(new Severity() { Name = "Critical", Description = "" });
+                //defaultSeverity.Add(new Severity() { Name = "Low", Description = "" });
+                //defaultSeverity.Add(new Severity() { Name = "Minor", Description = "" });
+                //defaultSeverity.Add(new Severity() { Name = "Major", Description = "" });
+                //defaultSeverity.Add(new Severity() { Name = "Critical", Description = "" });
 
-                context.Severities.AddOrUpdate(defaultSeverity.Cast<Severity>().ToArray());
+                //context.Severities.AddOrUpdate(defaultSeverity.Cast<Severity>().ToArray());
 
 
 
-                // Product
-                IList<Product> defaultProduct = new List<Product>();
+                //// Product
+                //IList<Product> defaultProduct = new List<Product>();
 
-                defaultProduct.Add(new Product() { Name = "Mountain Dew", Description = "" });
-                defaultProduct.Add(new Product() { Name = "Bed Sheet", Description = "" });
-                defaultProduct.Add(new Product() { Name = "Cushion Relaxer 3000", Description = "" });
-                defaultProduct.Add(new Product() { Name = "Tissue Paper", Description = "" });
+                //defaultProduct.Add(new Product() { Name = "Mountain Dew", Description = "" });
+                //defaultProduct.Add(new Product() { Name = "Bed Sheet", Description = "" });
+                //defaultProduct.Add(new Product() { Name = "Cushion Relaxer 3000", Description = "" });
+                //defaultProduct.Add(new Product() { Name = "Tissue Paper", Description = "" });
 
-                context.Products.AddOrUpdate(defaultProduct.Cast<Product>().ToArray());
+                //context.Products.AddOrUpdate(defaultProduct.Cast<Product>().ToArray());
 
-                // Priority
-                IList<Priority> defaultPriority = new List<Priority>();
+                //// Priority
+                //IList<Priority> defaultPriority = new List<Priority>();
 
-                defaultPriority.Add(new Priority() { Name = "Low", Description = "" });
-                defaultPriority.Add(new Priority() { Name = "Medium", Description = "" });
-                defaultPriority.Add(new Priority() { Name = "High", Description = "" });
-                defaultPriority.Add(new Priority() { Name = "Immediate", Description = "" });
+                //defaultPriority.Add(new Priority() { Name = "Low", Description = "" });
+                //defaultPriority.Add(new Priority() { Name = "Medium", Description = "" });
+                //defaultPriority.Add(new Priority() { Name = "High", Description = "" });
+                //defaultPriority.Add(new Priority() { Name = "Immediate", Description = "" });
 
-                context.Priorities.AddOrUpdate(defaultPriority.Cast<Priority>().ToArray());
+                //context.Priorities.AddOrUpdate(defaultPriority.Cast<Priority>().ToArray());
 
                 // ApplicationUsers
                 //IList<ApplicationUsers> defaultUsers = new List<ApplicationUsers>();

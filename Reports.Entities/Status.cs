@@ -1,4 +1,4 @@
-namespace Reports.Entities
+namespace BugMania.Shapes
 {
     using System;
     using System.Collections.Generic;

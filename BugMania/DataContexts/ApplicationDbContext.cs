@@ -1,4 +1,4 @@
-using Reports.Entities;
+using BugMania.Shapes;
 
 namespace BugMania.DataContexts
 {
@@ -9,6 +9,7 @@ namespace BugMania.DataContexts
     using BugMania.Models;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity.ModelConfiguration.Conventions;
+    using BugMania.Shapes;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -22,7 +23,8 @@ namespace BugMania.DataContexts
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<GroupMember> GroupMembers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-
+        public virtual DbSet<Log> Logs { get; set; }
+        public virtual DbSet<Operation> Operations { get; set; }
 
 
         public ApplicationDbContext()
@@ -102,16 +104,48 @@ namespace BugMania.DataContexts
                 .WithMany(e => e.Groups)
                 .HasForeignKey<int>(s => s.ProductId)
                 .WillCascadeOnDelete(false);
-            
+
             modelBuilder.Entity<Group>()
-                .HasMany(e => e.Members)
-                .WithMany(e => e.Groups)
-                .Map(m => m.ToTable("GroupMemberMap").MapLeftKey("GroupId").MapRightKey("UserId"));
+                .HasMany(e => e.GroupMembers)
+                .WithRequired(e => e.Group)
+                .HasForeignKey<int>(s => s.GroupId)
+                .WillCascadeOnDelete(false);
             
+            modelBuilder.Entity<GroupMember>()
+                .HasRequired(e => e.User)
+                .WithMany(e => e.MemberOf)
+                .HasForeignKey<string>(s => s.UserId)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<GroupMember>()
                 .HasMany(e => e.Roles)
                 .WithMany(e => e.GroupMembers)
                 .Map(m => m.ToTable("GroupMemberRoles").MapLeftKey("GroupMemberId").MapRightKey("RoleId"));
+
+            modelBuilder.Entity<Log>()
+                .HasRequired(e => e.Editor)
+                .WithMany(e => e.EditedReports)
+                .HasForeignKey<string>(s => s.EditorId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Log>()
+                .HasRequired(e => e.BugReport)
+                .WithMany(e => e.EditLog)
+                .HasForeignKey<int>(s => s.BugReportId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Log>()
+                .HasRequired(e => e.Operation)
+                .WithMany(e => e.Logs)
+                .HasForeignKey<int>(s => s.OperationId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasRequired(e => e.Role)
+                .WithMany(e => e.Users)
+                .HasForeignKey<int?>(s => s.RoleId)
+                .WillCascadeOnDelete(false);
+
 
             base.OnModelCreating(modelBuilder);
         }

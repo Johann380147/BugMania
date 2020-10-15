@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-
+    <link rel="shortcut icon" type="image/ico" href="@Url.Content("~/favicon.ico")">
 </head>
 <body>
     <div class="navbar navbar-custom navbar-fixed-top container-fluid custom-nav-shadow">
@@ -20,7 +20,7 @@
 
             <div>
                 <img src="~/Content/Images/bug.svg" class="img-icon pull-left" />
-                @Html.ActionLink("BugMania", "Index", "BugReports", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("BugMania", "View", "ViewAllBugReport", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
         </div>

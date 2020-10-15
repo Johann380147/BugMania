@@ -6,6 +6,11 @@
 *.user
 *.userosscache
 *.sln.docstates
+.Web.config
+.Startup.Auth.cs
+.BugMania2020\ -\ Web\ deploy.pubxml
+
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

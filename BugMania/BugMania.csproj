@@ -178,11 +178,27 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BugReportsController.cs" />
-    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\Account\AssignAccountRoleController.cs" />
+    <Compile Include="Controllers\Account\VerifyAccountController.cs" />
+    <Compile Include="Controllers\BugReport\CreateBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\DeleteBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\EditBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\ViewAllBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\ViewSingleBugReportController.cs" />
+    <Compile Include="Controllers\Comment\CreateCommentController.cs" />
+    <Compile Include="Controllers\Comment\DeleteCommentController.cs" />
+    <Compile Include="Controllers\Comment\EditCommentController.cs" />
+    <Compile Include="Controllers\Comment\ViewCommentController.cs" />
+    <Compile Include="Controllers\Group\CreateGroupController.cs" />
+    <Compile Include="Controllers\Group\DeleteGroupController.cs" />
+    <Compile Include="Controllers\Group\EditGroupController.cs" />
+    <Compile Include="Controllers\Group\ViewGroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
+    <Compile Include="Controllers\Tag\CreateTagController.cs" />
+    <Compile Include="Controllers\Tag\EditTagController.cs" />
+    <Compile Include="Controllers\Tag\ViewTagController.cs" />
     <Compile Include="DataContexts\Migrations\202010101309579_InitialCreate.cs" />
     <Compile Include="DataContexts\Migrations\202010101309579_InitialCreate.Designer.cs">
       <DependentUpon>202010101309579_InitialCreate.cs</DependentUpon>
@@ -199,6 +215,59 @@
     <Compile Include="DataContexts\Migrations\202010101422175_Seed.Designer.cs">
       <DependentUpon>202010101422175_Seed.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\Migrations\202010121705231_ChangeGroupMemberRelationship.cs" />
+    <Compile Include="DataContexts\Migrations\202010121705231_ChangeGroupMemberRelationship.designer.cs">
+      <DependentUpon>202010121705231_ChangeGroupMemberRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010131247167_AddUserRelationshipToGroupMember.cs" />
+    <Compile Include="DataContexts\Migrations\202010131247167_AddUserRelationshipToGroupMember.designer.cs">
+      <DependentUpon>202010131247167_AddUserRelationshipToGroupMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010131419568_AddLogShape.cs" />
+    <Compile Include="DataContexts\Migrations\202010131419568_AddLogShape.designer.cs">
+      <DependentUpon>202010131419568_AddLogShape.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010131433439_AddRoleToUser.cs" />
+    <Compile Include="DataContexts\Migrations\202010131433439_AddRoleToUser.designer.cs">
+      <DependentUpon>202010131433439_AddRoleToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010131503345_AlterFKRoleIdNonNullable.cs" />
+    <Compile Include="DataContexts\Migrations\202010131503345_AlterFKRoleIdNonNullable.designer.cs">
+      <DependentUpon>202010131503345_AlterFKRoleIdNonNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010140711284_AddEditColumnBugReport.cs" />
+    <Compile Include="DataContexts\Migrations\202010140711284_AddEditColumnBugReport.designer.cs">
+      <DependentUpon>202010140711284_AddEditColumnBugReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010140729517_pendingChanges.cs" />
+    <Compile Include="DataContexts\Migrations\202010140729517_pendingChanges.designer.cs">
+      <DependentUpon>202010140729517_pendingChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010141459338_AlterUserRoleIdProperties.cs" />
+    <Compile Include="DataContexts\Migrations\202010141459338_AlterUserRoleIdProperties.designer.cs">
+      <DependentUpon>202010141459338_AlterUserRoleIdProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010141514245_AlterUserRoleIdProperties1.cs" />
+    <Compile Include="DataContexts\Migrations\202010141514245_AlterUserRoleIdProperties1.designer.cs">
+      <DependentUpon>202010141514245_AlterUserRoleIdProperties1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010150303358_AddOperationTypeToLogs.cs" />
+    <Compile Include="DataContexts\Migrations\202010150303358_AddOperationTypeToLogs.designer.cs">
+      <DependentUpon>202010150303358_AddOperationTypeToLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BugReportEntity.cs" />
+    <Compile Include="Entities\CommentEntity.cs" />
+    <Compile Include="Entities\GroupEntity.cs" />
+    <Compile Include="Entities\LogEntity.cs" />
+    <Compile Include="Entities\OperationEntity.cs" />
+    <Compile Include="Entities\PriorityEntity.cs" />
+    <Compile Include="Entities\StatusEntity.cs" />
+    <Compile Include="Entities\ApplicationUserEntity.cs" />
+    <Compile Include="Entities\GroupMemberEntity.cs" />
+    <Compile Include="Entities\TagEntity.cs" />
+    <Compile Include="Entities\RoleEntity.cs" />
+    <Compile Include="Entities\SeverityEntity.cs" />
+    <Compile Include="Entities\ProductEntity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,6 +286,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\customstyles.css" />
     <Content Include="Content\Images\bug.svg" />
     <Content Include="Content\Images\default-profile.png" />
     <Content Include="favicon.ico" />
@@ -372,21 +442,27 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\BugReports\Create.cshtml" />
-    <Content Include="Views\BugReports\Delete.cshtml" />
-    <Content Include="Views\BugReports\Details.cshtml" />
-    <Content Include="Views\BugReports\Edit.cshtml" />
-    <Content Include="Views\BugReports\Index.cshtml" />
-    <Content Include="Views\Tags\Delete.cshtml" />
-    <Content Include="Views\Tags\Details.cshtml" />
-    <Content Include="Views\Tags\Edit.cshtml" />
-    <Content Include="Views\Tags\Index.cshtml" />
-    <Content Include="Views\Shared\_CreateTag.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Details.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Comments\Index.cshtml" />
-    <Content Include="Views\BugReports\_CreateComment.cshtml" />
+    <Content Include="Views\Tag\DeleteTagUI.cshtml" />
+    <Content Include="Views\Tag\DetailsTagUI.cshtml" />
+    <Content Include="Views\Tag\EditTagUI.cshtml" />
+    <Content Include="Views\Tag\ViewTagUI.cshtml" />
+    <Content Include="Views\Tag\_CreateTagUI.cshtml" />
+    <Content Include="Views\Comment\DeleteCommentUI.cshtml" />
+    <Content Include="Views\Comment\DetailsCommentUI.cshtml" />
+    <Content Include="Views\Comment\EditCommentUI.cshtml" />
+    <Content Include="Views\Comment\ViewCommentUI.cshtml" />
+    <Content Include="Views\Group\_CreateGroupUI.cshtml" />
+    <Content Include="Views\Group\DeleteGroupUI.cshtml" />
+    <Content Include="Views\Group\DetailsGroupUI.cshtml" />
+    <Content Include="Views\Group\EditGroupUI.cshtml" />
+    <Content Include="Views\Group\ViewGroupUI.cshtml" />
+    <Content Include="Views\BugReport\CreateBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\DeleteBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\ViewSingleBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\EditBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\ViewAllBugReportUI.cshtml" />
+    <Content Include="Views\Comment\_CreateCommentUI.cshtml" />
+    <Content Include="Views\Account\AssignAccountRoleUI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -403,23 +479,55 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Reports.Entities\Reports.Entities.csproj">
+    <ProjectReference Include="..\Reports.Entities\BugMania.Shapes.csproj">
       <Project>{d6371207-7bca-4a8f-9e3e-fc90b832a87e}</Project>
-      <Name>Reports.Entities</Name>
+      <Name>BugMania.Shapes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataContexts\Migrations\202010101309579_InitialCreate.resx">
       <DependentUpon>202010101309579_InitialCreate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\Migrations\202010101405110_AddCommentRelationToUser.resx">
       <DependentUpon>202010101405110_AddCommentRelationToUser.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\Migrations\202010101413250_ConfigureVirtual.resx">
       <DependentUpon>202010101413250_ConfigureVirtual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\Migrations\202010101422175_Seed.resx">
       <DependentUpon>202010101422175_Seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010121705231_ChangeGroupMemberRelationship.resx">
+      <DependentUpon>202010121705231_ChangeGroupMemberRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010131247167_AddUserRelationshipToGroupMember.resx">
+      <DependentUpon>202010131247167_AddUserRelationshipToGroupMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010131419568_AddLogShape.resx">
+      <DependentUpon>202010131419568_AddLogShape.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010131433439_AddRoleToUser.resx">
+      <DependentUpon>202010131433439_AddRoleToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010131503345_AlterFKRoleIdNonNullable.resx">
+      <DependentUpon>202010131503345_AlterFKRoleIdNonNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010140711284_AddEditColumnBugReport.resx">
+      <DependentUpon>202010140711284_AddEditColumnBugReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010140729517_pendingChanges.resx">
+      <DependentUpon>202010140729517_pendingChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010141459338_AlterUserRoleIdProperties.resx">
+      <DependentUpon>202010141459338_AlterUserRoleIdProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010141514245_AlterUserRoleIdProperties1.resx">
+      <DependentUpon>202010141514245_AlterUserRoleIdProperties1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010150303358_AddOperationTypeToLogs.resx">
+      <DependentUpon>202010150303358_AddOperationTypeToLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

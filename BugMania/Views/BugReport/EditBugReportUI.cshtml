@@ -1,0 +1,219 @@
+﻿@model BugMania.Models.EditBugReportViewModel
+
+@{
+    ViewBag.Title = "Edit Bug Report";
+}
+
+<div class="m-b-10p">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 general-header">Edit Bug Report</div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id, new { @id = "editBrId"})
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @id = "editBrTitle", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @id = "editBrDescription", @class = "form-control", @rows = "15" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Product</label>
+            <div class="col-md-8">
+                @Html.DropDownList("ProductId", null, htmlAttributes: new { @id = "editBrProduct", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Severity</label>
+            <div class="col-md-8">
+                @Html.DropDownList("SeverityId", null, htmlAttributes: new { @id = "editBrSeverity", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SeverityId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Priority</label>
+            <div class="col-md-8">
+                @Html.DropDownList("PriorityId", null, htmlAttributes: new { @id = "editBrPriority", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Status</label>
+            <div class="col-md-8">
+                @Html.DropDownList("StatusId", null, htmlAttributes: new { @id = "editBrStatus", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Assignees</label>
+            <div class="col-md-3">
+                <select id="lstAssignees" class="select-list" multiple="multiple" size="4">
+                    @foreach (var assignee in Model.Assignees)
+                    {
+                        <option>@assignee.Email</option>
+                    }
+                </select>
+            </div>
+            <div class="btn-edit-container col-md-1">
+                <div><span id="btnShowGetUserModal" class="btn btn-primary btn-std m-b-10">Add</span></div>
+                <div><span id="btnRemoveUserEmail" class="btn btn-warning btn-std">Remove</span></div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+
+        <div class="m-tb-50"></div>
+        <div>
+            <div class="col-md-2"></div>
+            <div class="col-md-8 div-zero-margin p-l-5">
+                @Html.ActionLink("Cancel", "Details", "ViewSingleBugReport", new { id = Model.Id }, new { @class = "btn btn-link-text color-white btn-danger btn-std" })
+                <button type="button" id="btnEditBugReport" class="btn btn-info btn-std pull-right">Save</button>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" tabindex="-1" id="getUserModal"
+        data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+                <h4 class="modal-title">Find User</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input id="txtUserEmail" type="text" placeholder="Email" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnHideGetUserModal" class="btn btn-danger btn-std pull-left">Close</button>
+                    <button type="button" id="btnVerifyUser" class="btn btn-info btn-std pull-right">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnShowGetUserModal").click(function () {
+                $("#getUserModal").modal('show');
+            });
+
+            $("#btnHideGetUserModal").click(function () {
+                $("#getUserModal").modal('hide');
+            });
+
+            // Verify user email
+            $("#btnVerifyUser").click(function (e) {
+                if ($("#txtUserEmail").val().trim() == "")
+                    return;
+                $.ajax({
+                    type: "post",
+                    url: "/VerifyAccount/Verify",
+                    data: { "email": $("#txtUserEmail").val() },
+                    success: function (response) {
+                        if (response == "True") {
+                            $('#getUserModal').modal('hide');
+                            var lstAssignees = $("#lstAssignees");
+                            var txtUserEmail = $("#txtUserEmail");
+
+                            lstAssignees.append('<option value="' + txtUserEmail.val() + '">' + txtUserEmail.val() +'</option>');
+                        } else {
+                            alert("The user could not be added, please ensure the email is typed correctly and the owner of the email has the role \"Developer\".");
+                        }
+                        
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                })
+                e.preventDefault();
+            });
+
+            //Submit Edit Form
+            $("#btnEditBugReport").click(function () {
+
+                var data = {
+                    Id: $("#editBrId").val(),
+                    Title: $("#editBrTitle").val(),
+                    Description: $("#editBrDescription").val(),
+                    ProductId: $("#editBrProduct").val(),
+                    SeverityId: $("#editBrSeverity").val(),
+                    PriorityId: $("#editBrPriority").val(),
+                    StatusId: $("#editBrStatus").val(),
+                    Email: getCollectionOfEmails(),
+                    __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+                };
+                
+                $.ajax({
+                    type: "post",
+                    url: "/EditBugReport/Edit",
+                    data: data,
+                    success: function (response) {
+                        // Get model id
+                        var id = @Html.Raw(Json.Encode(Model.Id));
+
+                        // Redirect to edited bug report
+                        window.location.href = '/Report/Details/' + id;
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                })
+
+                e.preventDefault();
+            });
+
+            // Remove email from list
+            $("#btnRemoveUserEmail").click(function () {
+                $("#lstAssignees option:selected").remove();
+            });
+
+
+            function getCollectionOfEmails() {
+                var arr = [];
+                var parent = document.getElementById("lstAssignees");
+                for (let child of Array.from(parent.children)) {
+                    arr.push(child.innerHTML);
+                }
+
+                return arr;
+            }
+        });
+    </script>
+}

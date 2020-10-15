@@ -1,0 +1,131 @@
+﻿@model BugMania.Models.DetailsBugReportViewModel
+
+@using BugMania.Helpers;
+@using BugMania.Models;
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+
+
+@Html.ActionLink(" ", "View", "ViewAllBugReport", null,
+    new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
+        Title = "Back" })
+<div class="report">
+    <div class="report-title">
+        @Model.Title
+    </div>
+    <div class="report-container">
+        <div class="report-header">
+            <div class="inline-block m-r-5">
+                @Html.LabelFor(model => model.Status, "Status", htmlAttributes: new { @class = "card-info-bold" }):
+                @Html.DisplayFor(model => model.Status.Name, new { @class = "" })
+            </div>
+            <div class="inline-block m-r-5">
+                @Html.LabelFor(model => model.Severity, "Severity", htmlAttributes: new { @class = "card-info-bold" }):
+                @Html.DisplayFor(model => model.Severity.Name, new { @class = "" })
+            </div>
+            <div class="inline-block m-r-5">
+                @Html.LabelFor(model => model.Priority, "Priority", htmlAttributes: new { @class = "card-info-bold" }):
+                @Html.DisplayFor(model => model.Priority.Name, new { @class = "" })
+            </div>
+            <div class="inline-block m-r-5 float-right">
+                @Html.LabelFor(model => model.Assignees, "Assignees", htmlAttributes: new { @class = "card-info-bold" }):
+                @if (Model.Assignees.Count() == 0)
+                {<span>None</span>}
+                @{ 
+                    int count = 1;
+                    foreach (var assignee in Model.Assignees)
+                    {
+                        @Html.DisplayFor(model => assignee.UserName, new { @class = "" })
+                        if (count < Model.Assignees.Count)
+                        {
+                            <span> | </span>
+                            count++;
+                        }
+                    }
+                }
+            </div>
+            <div class="inline-block">
+                @Html.LabelFor(model => model.Product, "Product", htmlAttributes: new { @class = "card-info-bold" }):
+                @Html.DisplayFor(model => model.Product.Name, new { @class = "" })
+            </div>
+        </div>
+        <hr class="report-header-divider" />
+        <div class="report-body">
+            @Html.DisplayFor(model => model.Description, new { @class = "" })
+        </div>
+
+
+        <label class="report-footer-post">
+            @DateTimeHelpers.GetRelativeTimePassed(Model.CreateDateTime)
+            by
+            @Html.DisplayFor(model => model.Author.UserName, new { @class = "" })
+        </label>
+        @if (Model.LastEditDateTime != null)
+        {
+            <label class="report-footer-edit">
+                Edited 
+                @Html.DisplayFor(model => model.LastEditDateTime, new { @class = "" })
+            </label>
+        }
+
+    </div>
+    <div class="report-footer2 m-t-10">
+        <div>
+            @foreach (var tag in Model.Tags)
+            {
+                <span class="card-info card-tag min-height-40">
+                    @Html.DisplayFor((modelItem) => tag.Name)
+                </span>
+            }
+        </div>
+        <div>
+            @if (User.IsInRole("Admin") ||
+                User.IsInRole("Triager"))
+            {
+                @Html.ActionLink("Edit", "Edit", "EditBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
+                <label>|</label>
+                @Html.ActionLink("Delete", "Delete", "DeleteBugReport", new { id = Model.Id }, new { })
+            }
+            else if (User.IsInRole("Reviewer") ||
+            User.IsInRole("Developer"))
+            {
+                @Html.ActionLink("Edit", "Edit", "EditBugReport", new { id = Model.Id }, new { })
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+@Html.Partial("/Views/Comment/_CreateCommentUI.cshtml", new CreateCommentViewModel(), new ViewDataDictionary(ViewData)
+{
+    { "BugReportId", Model.Id }
+})
+
+
+<div class="comments-container">
+    @foreach (var comment in Model.getCommentsDescending)
+    {
+        <div class="comment-card">
+            <div class="comment-profile">
+                <img class="profile-picture" src="~/Content/Images/default-profile.png" />
+                <div class="profile-user">
+                    @Html.DisplayFor(model => comment.Commenter.UserName, new { @class = "" })
+                </div>
+            </div>
+            <div class="comment-content">
+                <div class="comment-body">
+                    @Html.DisplayFor(model => comment.Content, new { @class = "" })
+                </div>
+                <div class="comment-time">
+                    <label>@DateTimeHelpers.GetRelativeTimePassed(comment.CommentDateTime, "Commented")</label>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

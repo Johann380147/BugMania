@@ -1,0 +1,119 @@
+﻿@model IList<BugMania.Models.AssignAccountRoleViewModel>
+
+@using BugMania.Shapes
+@{
+    ViewBag.Title = "Assign Roles";
+}
+
+
+<div class="container m-b-10p">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 general-header">Assign Roles</div>
+</div>
+
+
+
+@using (Html.BeginForm("Assign", "AssignAccountRole", FormMethod.Post, new { }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="col-md-2"></div>
+        <table class="tbl-roles-assign col-md-8">
+            @{
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <label>User</label>
+                    </th>
+                    <th>
+                        <label>Role</label>
+                    </th>
+                </tr>
+                int count = 1;
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => Model[i].Id, new { @id = "txtId" + i })
+                        </td>
+                        <td><span>@count</span>.</td>
+                        <td>@Model[i].Email</td>
+                        @if (Model[i].Role.Name == "Admin")
+                        {
+                            <td>
+                                @Html.DropDownList("RoleId", new List<SelectListItem> {
+                                                                new SelectListItem { Value=Model[i].Role.Id.ToString(),
+                                                                                     Text =Model[i].Role.Name }},
+                                    htmlAttributes: new { @id = "selectRoleId" + i, @class = "form-control", disabled = "disabled" })
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DropDownListFor(m => Model[i].RoleId,
+                                 new SelectList((IEnumerable<Role>)ViewBag.RoleId, "Id", "Name", Model[i].RoleId),
+                                 Model[i].Role.Name,
+                                 new { @id = "selectRoleId" + i, @class = "form-control" })
+                            </td>
+                        }
+                    </tr>
+                    count++;
+                }
+            }
+        </table>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 div-zero-margin p-l-5">
+            @Html.ActionLink("Reset", "Assign", "AssignAccountRole", null, new { @class = "btn btn-link-text color-white btn-warning btn-std" })
+            <button type="button" id="btnSave" class="btn btn-info m-l-20-p">Save Changes</button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        // Submit Form with ajax because for some fucking reason it won't fucking work with form submit
+        $(document).ready(function () {
+            $("#btnSave").click(function () {
+                var data = {
+                    assignAccountRoleViewModel: [],
+                    __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+                };
+                var count = @Html.Raw(Json.Encode(Model.Count));
+
+                for (i = 0; i < count; i++) {
+                    data.assignAccountRoleViewModel.push({
+                        Id: $("#txtId" + i).val(),
+                        RoleId: $("#selectRoleId" + i + " option:selected").val(),
+                    });
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "/AssignAccountRole/Assign",
+                    data: data,
+                    success: function (response) {
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                })
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+
+                    
+                    
+
+                
+
+                    

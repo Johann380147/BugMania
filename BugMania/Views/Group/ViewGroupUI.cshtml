@@ -1,0 +1,107 @@
+﻿@model BugMania.Models.GroupsViewModel
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Your Groups</title>
+</head>
+<body>
+    @if (Model.MemberOf == null || Model.MemberOf.Count == 0)
+    {
+        <div class="page-placeholder-container">
+
+            <p class="page-placeholder">
+                Nothing here yet. Discover groups or Create one.
+                <button id="btnShowGroupModal" class="button">+</button>
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="div-margin-10">
+            <div><button id="btnShowGroupModal" class="button m-b-10p">+</button></div>
+            <div class="group-view-container">
+                @foreach (var item in Model.MemberOf)
+                {
+                    <a>
+                        <div class="group-card">
+                            <div class="group-content">
+                                @item.Group.Name
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+</body>
+</html>
+
+<div class="modal fade" tabindex="-1" id="createGroupModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+                <h4 class="modal-title">Create Group</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("/Views/Group/_CreateGroupUI.cshtml")
+                <div class="modal-footer">
+                    <button type="button" id="btnHideGroupModal" class="btn btn-danger btn-std pull-left">Close</button>
+                    <button type="button" id="btnCreateGroup" class="btn btn-info btn-std">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#btnShowGroupModal").click(function () {
+                $("#createGroupModal").modal('show');
+            });
+            
+            $("#btnHideGroupModal").click(function () {
+                $("#createGroupModal").modal('hide');
+            });
+
+            // Submit Create Group Form
+            $('#btnCreateGroup').click(function () {
+
+                var data = {
+                    Name: $("#createGroupName").val(),
+                    ProductId: $("#createGroupProduct").val(),
+                    __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+                };
+
+                $.ajax({
+                    type: "post",
+                    url: "/CreateGroup/Create",
+                    data: data,
+                    success: function (response) {
+                        $('#createGroupModal').modal('hide');
+                        window.location.href = '/Group';
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                })
+            });
+        });
+    </script>
+}

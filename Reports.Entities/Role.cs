@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reports.Entities
+namespace BugMania.Shapes
 {
     public class Role
     {
@@ -13,6 +13,7 @@ namespace Reports.Entities
         public Role()
         {
             GroupMembers = new HashSet<GroupMember>();
+            Users = new HashSet<ApplicationUser>();
         }
         
         [Key]
@@ -25,5 +26,8 @@ namespace Reports.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<GroupMember> GroupMembers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

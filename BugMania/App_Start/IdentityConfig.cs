@@ -12,7 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using BugMania.Models;
 using BugMania.DataContexts;
-using Reports.Entities;
+using BugMania.Shapes;
 
 namespace BugMania
 {

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Web;
 using System.Web.Optimization;
 
 namespace BugMania
@@ -24,7 +25,16 @@ namespace BugMania
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/Site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/customstyles.css"));
+        }
+    }
+
+    public class AsDefinedBundleOrderer : IBundleOrderer
+    {
+        public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
+        {
+            return files;
         }
     }
 }
