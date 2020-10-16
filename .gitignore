@@ -264,3 +264,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/BugMania/Properties/PublishProfiles/BugMania2020 - Web Deploy.pubxml
+/BugMania/Web.config

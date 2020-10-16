@@ -22,56 +22,42 @@ namespace BugMania.Entities
 
         // Find - gets local, SingleOrDefault - force get from DB
         // .Include loads associated data from parent table into child object
-        public async Task<List<BugReport>> GetAllBugReports()
+        public IQueryable<BugReport> GetSetOfReports(int skipCount, int takeCount)
         {
-            IQueryable<BugReport> bugReports;
-
-            bugReports = db.BugReports
+            var model = db.BugReports
                 .Include(b => b.Priority)
                 .Include(b => b.Product)
                 .Include(b => b.Severity)
                 .Include(b => b.Status)
-                .Include(b => b.Tags);
-
-            var result = await bugReports.ToListAsync();
-            if (result != null)
-            {
-                var sorted = result.OrderByDescending(t => t.CreateDateTime).ToList();
-                return sorted;
-            }
-            else
-            {
-                return null;
-            }
+                .Include(b => b.Tags)
+                .OrderByDescending(t => t.LastEditDateTime)
+                .ThenBy(t => t.CreateDateTime)
+                .Skip(skipCount)
+                .Take(takeCount);
+            return model;
         }
 
-        public async Task<List<BugReport>> GetFilteredBugReports(string filter = "")
+        public IQueryable<BugReport> GetFilteredSetOfReports(int skipCount, int takeCount, string filter = "")
         {
-            IQueryable<BugReport> bugReports;
-
-            bugReports = db.BugReports.Where(
+            var model = db.BugReports.Where(
                b => b.Title.Contains(filter) ||
                b.Description.Contains(filter) ||
                b.Product.Name.Contains(filter) ||
                b.Assignees.Any(a => a.Email.Contains(filter)) ||
                b.Tags.Any(t => t.Name.Contains(filter)))
-               .Include(b => b.Priority)
-               .Include(b => b.Product)
-               .Include(b => b.Severity)
-               .Include(b => b.Status)
-               .Include(b => b.Tags);
-
-            var result = await bugReports.ToListAsync();
-            if (result != null)
-            {
-                var sorted = result.OrderByDescending(t => t.CreateDateTime).ToList();
-                return sorted;
-            }
-            else
-            {
-                return null;
-            }
+                .Include(b => b.Priority)
+                .Include(b => b.Product)
+                .Include(b => b.Severity)
+                .Include(b => b.Status)
+                .Include(b => b.Tags)
+                .OrderByDescending(t => t.LastEditDateTime)
+                .ThenBy(t => t.CreateDateTime)
+                .Skip(skipCount)
+                .Take(takeCount);
+            return model;
         }
+
+
 
         public async Task<BugReport> GetSingleBugReport(int id)
         {

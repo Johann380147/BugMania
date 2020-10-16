@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BugMania.Shapes.BugReport>
+
+@using BugMania.Helpers;
+
+
+@foreach (var item in Model)
+{
+    <a class="display-block card width-100p min-height-100" href="@Url.Action("Details", "ViewSingleBugReport", new { id = item.Id })">
+
+        <div class="card-row">
+            <div class="inline-block card-info">
+                <label class="btn-link-text">
+                    @DateTimeHelpers.GetRelativeTimePassed(item.CreateDateTime)
+                </label>
+            </div>
+            <div class="float-right inline-block">
+                <span class="card-label">
+                    @Html.DisplayNameFor(model => model.Status.Name):
+                </span>
+                <span class="card-info">
+                    @Html.DisplayFor(modelItem => item.Status.Name)
+                </span>
+            </div>
+        </div>
+        <div class="card-row">
+            <div class="inline-block card-title">
+                <span class="">
+                    @item.Title
+                </span>
+            </div>
+            <div class="inline-block float-right">
+                <span class="card-label">
+                    @Html.DisplayNameFor(model => model.Priority.Name):
+                </span>
+                <span class="card-info m-r-5">
+                    @Html.DisplayFor(modelItem => item.Priority.Name)
+                </span>
+                <span class="card-label">
+                    @Html.DisplayNameFor(model => model.Severity.Name):
+                </span>
+                <span class="card-info">
+                    @Html.DisplayFor(modelItem => item.Severity.Name)
+                </span>
+            </div>
+        </div>
+        <div class="card-row bottom-card">
+            <div class="inline-block">
+                @foreach (var tag in item.Tags)
+                {
+                    <span class="card-info card-tag">
+                        @Html.DisplayFor((a) => tag.Name)
+                    </span>
+                }
+            </div>
+            <div class="float-right inline-block">
+                <span class="card-label">
+                    @Html.DisplayNameFor(model => model.Product.Name):
+                </span>
+                <span class="card-info">
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </span>
+            </div>
+        </div>
+
+    </a>
+}

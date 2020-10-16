@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<BugMania.Shapes.BugReport>
 
-@using BugMania.Helpers;
 
 @{
     ViewBag.Title = "Home";
 }
-<div class="div-margin-10">
+<div id="report-container" class="div-margin-10">
     <div class="container-fluid">
         <div class="row m-b-10">
             <div class="col-sm-6">
@@ -30,66 +29,67 @@
         </div>
     </div>
     <hr />
-    
-    @foreach (var item in Model)
-    {
-        <a class="display-block card width-100p min-height-100" href="@Url.Action("Details", "ViewSingleBugReport", new { id = item.Id })">
-
-            <div class="card-row">
-                <div class="inline-block card-info">
-                    <label class="btn-link-text">
-                        @DateTimeHelpers.GetRelativeTimePassed(item.CreateDateTime)
-                    </label>
-                </div>
-                <div class="float-right inline-block">
-                    <span class="card-label">
-                        @Html.DisplayNameFor(model => model.Status.Name):
-                    </span>
-                    <span class="card-info">
-                        @Html.DisplayFor(modelItem => item.Status.Name)
-                    </span>
-                </div>
-            </div>
-            <div class="card-row">
-                <div class="inline-block card-title">
-                    <span class="">
-                        @item.Title
-                    </span>
-                </div>
-                <div class="inline-block float-right">
-                    <span class="card-label">
-                        @Html.DisplayNameFor(model => model.Priority.Name):
-                    </span>
-                    <span class="card-info m-r-5">
-                        @Html.DisplayFor(modelItem => item.Priority.Name)
-                    </span>
-                    <span class="card-label">
-                        @Html.DisplayNameFor(model => model.Severity.Name):
-                    </span>
-                    <span class="card-info">
-                        @Html.DisplayFor(modelItem => item.Severity.Name)
-                    </span>
-                </div>
-            </div>
-            <div class="card-row bottom-card">
-                <div class="inline-block">
-                    @foreach (var tag in item.Tags)
-                    {
-                        <span class="card-info card-tag">
-                            @Html.DisplayFor((a) => tag.Name)
-                        </span>
-                    }
-                </div>
-                <div class="float-right inline-block">
-                    <span class="card-label">
-                        @Html.DisplayNameFor(model => model.Product.Name):
-                    </span>
-                    <span class="card-info">
-                        @Html.DisplayFor(modelItem => item.Product.Name)
-                    </span>
-                </div>
-            </div>
-
-        </a>
-    }
+    <div id="result">
+        @Html.Partial("/Views/BugReport/_ViewBugReportCardUI.cshtml")
+    </div>
 </div>
+
+
+@section Scripts  {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        
+        $("#main-content").scroll(function () {
+            console.log('c' + $("#main-content").scrollTop());
+            console.log('w' + $(window).height());
+            console.log('r' + $("#report-container").height());
+            console.log('---------------------')
+            if ($("#main-content").scrollTop() + $(window).height() >= $("#report-container").height() + $(window).height() * 0.1) {
+                
+                FetchDataFromServer();
+            }
+        });
+
+        var skipCount = 10; // start at 11th record (assumes first 10 included in initial view)
+        var takeCount = 10; // return new 5 records
+        var hasMoreRecords = true;
+        var retrievingRecords = false;
+
+        function FetchDataFromServer() {
+            
+            if (!hasMoreRecords || retrievingRecords) {
+                return;
+            }
+            retrievingRecords = true;
+
+            var filterString = window.location.search.split("=");
+            
+            if (filterString[0] != "") {
+                filterString = filterString[1];
+            }
+            else {
+                filterString = filterString[0];
+            }
+
+            $.ajax({
+                url: '@Url.Action("FetchData", "ViewAllBugReport")',
+                data: { skipCount : skipCount, takeCount: takeCount, filter: filterString },
+                datatype: 'html',
+                success: function (data) {
+                    if (data == "") {
+                        hasMoreRecords = false; // signal no more records to display
+                    } else {
+                        $("#result").append(data);
+                        skipCount += takeCount; // update for next iteration
+                    }
+                    retrievingRecords = false;
+                },
+                error: function () {
+                    retrievingRecords = false;
+                    alert("Error loading more pages");
+                }
+            });
+        }
+    </script>
+}

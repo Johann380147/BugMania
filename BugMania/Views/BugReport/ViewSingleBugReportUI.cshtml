@@ -2,6 +2,7 @@
 
 @using BugMania.Helpers;
 @using BugMania.Models;
+@using BugMania.Helpers;
 
 @{
     ViewBag.Title = Model.Title;
@@ -67,7 +68,7 @@
         {
             <label class="report-footer-edit">
                 Edited 
-                @Html.DisplayFor(model => model.LastEditDateTime, new { @class = "" })
+                @DateTimeHelpers.getLocalTime(Model.LastEditDateTime)
             </label>
         }
 

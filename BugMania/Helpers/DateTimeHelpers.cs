@@ -51,5 +51,18 @@ namespace BugMania.Helpers
                 return prefix + (years <= 1 ? "one year ago" : years + " years ago");
             }
         }
- }   
+
+        public static DateTime? getLocalTime(DateTime? timeToConvert)
+        {
+            if (timeToConvert.HasValue)
+            {
+                var ticks = timeToConvert.Value.Ticks + (DateTime.Now.Ticks - DateTime.UtcNow.Ticks);
+                return new DateTime(ticks);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }   
 }

@@ -30,13 +30,35 @@ namespace BugMania.BugReportControllers
         {
             if (String.IsNullOrEmpty(filter))
             {
-                return View("/Views/BugReport/ViewAllBugReportUI.cshtml", await bugReportEntity.GetAllBugReports());
+                return View("/Views/BugReport/ViewAllBugReportUI.cshtml", bugReportEntity.GetSetOfReports(0, 10));
                 
             }
             else
             {
                 ViewBag.Filters = filter;
-                return View("/Views/BugReport/ViewAllBugReportUI.cshtml", await bugReportEntity.GetFilteredBugReports(filter));
+                return View("/Views/BugReport/ViewAllBugReportUI.cshtml", bugReportEntity.GetFilteredSetOfReports(0, 10, filter));
+            }
+        }
+
+        public ActionResult FetchData(int skipCount, int takeCount, string filter)
+        {
+            IQueryable<BugReport> model;
+            if (filter == "")
+            {
+                model = bugReportEntity.GetSetOfReports(skipCount, takeCount);
+            }
+            else
+            {
+                model = bugReportEntity.GetFilteredSetOfReports(skipCount, takeCount, filter);
+            }
+            
+            if (model.Any())
+            {
+                return PartialView("/Views/BugReport/_ViewBugReportCardUI.cshtml", model);
+            }
+            else
+            {
+                return null;
             }
         }
 

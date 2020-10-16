@@ -463,6 +463,7 @@
     <Content Include="Views\BugReport\ViewAllBugReportUI.cshtml" />
     <Content Include="Views\Comment\_CreateCommentUI.cshtml" />
     <Content Include="Views\Account\AssignAccountRoleUI.cshtml" />
+    <Content Include="Views\BugReport\_ViewBugReportCardUI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
