@@ -59,9 +59,9 @@ namespace BugMania.Entities
 
 
 
-        public async Task<BugReport> GetSingleBugReport(int id)
+        public BugReport GetSingleBugReport(int id)
         {
-            BugReport bugReport = await db.BugReports
+            BugReport bugReport = db.BugReports
                                     .Include(b => b.Product)
                                     .Include(b => b.Author)
                                     .Include(b => b.Severity)
@@ -71,12 +71,12 @@ namespace BugMania.Entities
                                     .Include(b => b.Comments.Select(c => c.Commenter))
                                     .Include(b => b.Assignees)
                                     .Include(b => b.EditLog)
-                                    .FirstAsync(b => b.Id == id);
+                                    .First(b => b.Id == id);
 
             return bugReport;
         }
 
-        public async Task<bool> AddBugReport(CreateBugReportViewModel createBugReportViewModel)
+        public bool AddBugReport(CreateBugReportViewModel createBugReportViewModel)
         {
             BugReport bugReport = new BugReport();
             var currDate = DateTime.UtcNow;
@@ -96,12 +96,15 @@ namespace BugMania.Entities
                 BugReportId = bugReport.Id,
                 EditorId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
                 EditDateTime = currDate,
-                OperationId = 1
+                OperationId = 1,
+                Status = "NEW"
             });
 
             foreach (var tag in createBugReportViewModel.Tags)
             {
-                var _t = db.Tags.Where(a => a.Id == tag.Id).Single();
+                var _t = db.Tags
+                    .Where(a => a.Id == tag.Id)
+                    .Single();
 
                 if (_t != null)
                 {
@@ -113,7 +116,7 @@ namespace BugMania.Entities
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return true;
             }
             catch
@@ -122,13 +125,13 @@ namespace BugMania.Entities
             }
         }
 
-        public async Task<bool> UpdateBugReport(EditBugReportViewModel editBugReportViewModel)
+        public bool UpdateBugReport(EditBugReportViewModel editBugReportViewModel)
         {
 
             ApplicationUserEntity userEntity = new ApplicationUserEntity();
             
 
-            BugReport bugReport = await GetSingleBugReport(editBugReportViewModel.Id);
+            BugReport bugReport = GetSingleBugReport(editBugReportViewModel.Id);
 
             bugReport.Title = editBugReportViewModel.Title;
             bugReport.Description = editBugReportViewModel.Description;
@@ -136,7 +139,20 @@ namespace BugMania.Entities
             bugReport.ProductId = editBugReportViewModel.ProductId;
             bugReport.SeverityId = editBugReportViewModel.SeverityId;
             bugReport.PriorityId = editBugReportViewModel.PriorityId;
-            bugReport.StatusId = editBugReportViewModel.StatusId;
+
+            string statusName;
+
+            if (bugReport.StatusId == editBugReportViewModel.StatusId)
+            {
+                statusName = "UNCHANGED";
+            }
+            else
+            {
+                statusName = db.Status
+                    .FirstOrDefault(i => i.Id == bugReport.StatusId)
+                    .Name;
+                bugReport.StatusId = editBugReportViewModel.StatusId;
+            }
             
 
             var currDate = DateTime.UtcNow;
@@ -151,13 +167,14 @@ namespace BugMania.Entities
                 BugReportId = bugReport.Id,
                 EditorId = System.Web.HttpContext.Current.User.Identity.GetUserId(),
                 EditDateTime = currDate,
-                OperationId = 2
+                OperationId = 2,
+                Status = statusName
             });
 
             bugReport.Assignees.Clear();
             foreach (var em in editBugReportViewModel.Email)
             {
-                var user = await userEntity.GetUserByEmail(em, db);
+                var user = userEntity.GetUserByEmail(em, db);
                 if (user != null)
                 {
                     bugReport.Assignees.Add(user);
@@ -166,7 +183,7 @@ namespace BugMania.Entities
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return true;
             }
             catch (DbUpdateException ex)
@@ -175,13 +192,13 @@ namespace BugMania.Entities
             }
         }
         
-        public async Task<bool> DeleteBugReport(int id)
+        public bool DeleteBugReport(int id)
         {
             try
             {
-                BugReport bugReport = await this.GetSingleBugReport(id);
+                BugReport bugReport = this.GetSingleBugReport(id);
                 db.BugReports.Remove(bugReport);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
 
                 return true;
             }

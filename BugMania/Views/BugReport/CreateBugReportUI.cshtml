@@ -10,7 +10,7 @@
 }
 
 
-@Html.ActionLink(" ", "View", "ViewAllBugReport", null,
+@Html.ActionLink(" ", "ViewAllReports", "ViewAllBugReport", null,
     new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
         Title = "Back" })
 
@@ -21,7 +21,7 @@
 
 
 
-@using (Html.BeginForm("Create", "CreateBugReport", FormMethod.Post, new { @id = "createBugReportForm" }))
+@using (Html.BeginForm("CreateReport", "CreateBugReport", FormMethod.Post, new { @id = "createBugReportForm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -90,7 +90,7 @@
         <div>
             <div class="col-md-2"></div>
             <div class="col-md-8 div-zero-margin p-l-5">
-                @Html.ActionLink("Cancel", "View", "ViewAllBugReport", null, new { @class = "btn btn-link-text color-white btn-danger btn-std" })
+                @Html.ActionLink("Cancel", "ViewAllReports", "ViewAllBugReport", null, new { @class = "btn btn-link-text color-white btn-danger btn-std" })
                 <button type="button" id="btnCreateBugReport" class="btn btn-info btn-std pull-right">Create</button>
             </div>
             <div class="col-md-2"></div>
@@ -136,7 +136,9 @@
 
             // Submit Create Bug Report Form
             $("#btnCreateBugReport").click(function () {
-
+                if ($("#createBrTitle").val().trim() == "" || $("#createBrDescription").val().trim() == "") {
+                    return;
+                }
                 var data = {
                     Title: $("#createBrTitle").val(),
                     Description: $("#createBrDescription").val(),
@@ -149,7 +151,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: "/CreateBugReport/Create",
+                    url: "/CreateBugReport/CreateReport",
                     data: data,
                     success: function (response) {
                         window.location.href = '/';
@@ -177,7 +179,6 @@
                     success: function (response) {
                         $('#createTagModal').modal('hide');
                         
-                        //window.location.href = '/Report/Create';
                         var tagList = $("#tagDropDownList");
                         $.ajax({
                             type: "post",

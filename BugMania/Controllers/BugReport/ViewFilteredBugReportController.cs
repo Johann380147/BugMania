@@ -16,23 +16,24 @@ using BugMania.Entities;
 
 namespace BugMania.BugReportControllers
 {
+
     [RoutePrefix("Report")]
-    public class ViewAllBugReportController : Controller
+    public class ViewFilteredBugReportController : Controller
     {
         private BugReportEntity bugReportEntity = new BugReportEntity();
-
-        [Route("View/All")]
-        [Route("~/", Name = "Default")]
-        public ActionResult ViewAllReports()
+        
+        [Route("View")]
+        public ActionResult ViewFilteredReports(string filter)
         {
-            var model = bugReportEntity.GetSetOfReports(0, 10);
+            ViewBag.Filters = filter;
+            var model = bugReportEntity.GetFilteredSetOfReports(0, 10, filter);
             return View("/Views/BugReport/ViewBugReportUI.cshtml", model);
         }
 
-        public ActionResult FetchData(int skipCount, int takeCount, string filter)
-        {
-            var model = bugReportEntity.GetSetOfReports(skipCount, takeCount);
-            
+        public ActionResult FetchFilteredData(int skipCount, int takeCount, string filter)
+        {   
+            var model = bugReportEntity.GetFilteredSetOfReports(skipCount, takeCount, filter);
+
             if (model.Any())
             {
                 return PartialView("/Views/BugReport/_ViewBugReportCardUI.cshtml", model);

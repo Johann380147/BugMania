@@ -4,7 +4,8 @@
 }
 
 body {
-    overflow:hidden;
+    overflow: hidden;
+    background: rgba(240, 247, 255, 0.8);
 }
 
 textarea {
@@ -149,7 +150,7 @@ ul.navbar-nav li a:hover {
 hr {
     border: none;
     height: 30px;
-    border-bottom: 1px solid #1f1209;
+    border-bottom: 1px solid #808080;
     box-shadow: 0 10px 10px -10px #333;
     margin: 0 -21px 30px;
 }
@@ -223,10 +224,11 @@ hr {
 }
 
 .card {
-    background-color: #f4faff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(0, 140, 255, 0.09);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
     padding: 10px 20px 5px 20px;
     margin: 5px;
+    border: 1px solid #d0eaff;
 }
 
 .card:hover {

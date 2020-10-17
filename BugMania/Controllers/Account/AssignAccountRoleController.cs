@@ -24,7 +24,7 @@ namespace BugMania.BugReportControllers
         RoleEntity roleEntity = new RoleEntity();
 
         [Route("Assign")]
-        public async Task<ActionResult> Assign()
+        public ActionResult Assign()
         {
             List<AssignAccountRoleViewModel> accounts = new List<AssignAccountRoleViewModel>();
 
@@ -39,11 +39,11 @@ namespace BugMania.BugReportControllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Assign(IList<AssignAccountRoleViewModel> assignAccountRoleViewModel)
+        public ActionResult Assign(IList<AssignAccountRoleViewModel> assignAccountRoleViewModel)
         {
             if (ModelState.IsValid)
             {
-                if (await userEntity.UpdateUsersRole(assignAccountRoleViewModel) == false) throw new Exception();
+                if (userEntity.UpdateUsersRole(assignAccountRoleViewModel) == false) throw new Exception();
             }
             return Redirect("/Account/Role/Assign");
         }

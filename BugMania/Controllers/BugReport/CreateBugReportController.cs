@@ -30,14 +30,14 @@ namespace BugMania.BugReportControllers
 
         // GET: Report/Create
         [Route("Create")]
-        public async Task<ActionResult> Create()
+        public ActionResult CreateReport()
         {
             CreateBugReportViewModel model = new CreateBugReportViewModel();
 
-            ViewBag.PriorityId = new SelectList(await priorityEntity.GetAllPriorities(), "Id", "Name");
-            ViewBag.SeverityId = new SelectList(await severityEntity.GetAllSeverities(), "Id", "Name");
-            ViewBag.ProductId = new SelectList(await productEntity.GetAllProducts(), "Id", "Name");
-            ViewBag.Tags = new SelectList(await tagEntity.GetAllTags(), "Id", "Name");
+            ViewBag.PriorityId = new SelectList(priorityEntity.GetAllPriorities(), "Id", "Name");
+            ViewBag.SeverityId = new SelectList(severityEntity.GetAllSeverities(), "Id", "Name");
+            ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name");
+            ViewBag.Tags = new SelectList(tagEntity.GetAllTags(), "Id", "Name");
             return View("/Views/BugReport/CreateBugReportUI.cshtml", model);
         }
 
@@ -46,27 +46,27 @@ namespace BugMania.BugReportControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateBugReportViewModel createBugReportViewModel)
+        public ActionResult CreateReport(CreateBugReportViewModel createBugReportViewModel)
         {
             if (ModelState.IsValid)
             {
                 bugReportEntity.AddBugReport(createBugReportViewModel);
 
-                return RedirectToAction("View", "ViewAllBugReport");
+                return RedirectToAction("ViewAllReports", "ViewAllBugReport");
             }
 
-            ViewBag.PriorityId = new SelectList(await priorityEntity.GetAllPriorities(), "Id", "Name", createBugReportViewModel.PriorityId);
-            ViewBag.SeverityId = new SelectList(await severityEntity.GetAllSeverities(), "Id", "Name", createBugReportViewModel.ProductId);
-            ViewBag.ProductId = new SelectList(await productEntity.GetAllProducts(), "Id", "Name", createBugReportViewModel.SeverityId);
-            ViewBag.Tags = new SelectList(await tagEntity.GetAllTags(), "Id", "Name");
+            ViewBag.PriorityId = new SelectList(priorityEntity.GetAllPriorities(), "Id", "Name", createBugReportViewModel.PriorityId);
+            ViewBag.SeverityId = new SelectList(severityEntity.GetAllSeverities(), "Id", "Name", createBugReportViewModel.ProductId);
+            ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name", createBugReportViewModel.SeverityId);
+            ViewBag.Tags = new SelectList(tagEntity.GetAllTags(), "Id", "Name");
 
             return View("/Views/BugReport/CreateBugReportUI.cshtml",createBugReportViewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetAllTags(string value)
+        public ActionResult GetAllTags(string value)
         {
-            var tags = new SelectList(await tagEntity.GetAllTags(), "Id", "Name").ToList();
+            var tags = new SelectList(tagEntity.GetAllTags(), "Id", "Name").ToList();
             
             return Json(tags, JsonRequestBehavior.AllowGet);
         }

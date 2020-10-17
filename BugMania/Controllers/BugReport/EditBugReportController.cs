@@ -29,23 +29,23 @@ namespace BugMania.BugReportControllers
 
         // GET: BugReport/Edit/5
         [Route("Edit/{id}")]
-        public async Task<ActionResult> Edit(int id)
+        public ActionResult EditReport(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = await bugReportEntity.GetSingleBugReport(id);
+            BugReport bugReport = bugReportEntity.GetSingleBugReport(id);
             if (bugReport == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.PriorityId = new SelectList(await priorityEntity.GetAllPriorities(), "Id", "Name", bugReport.PriorityId);
-            ViewBag.SeverityId = new SelectList(await severityEntity.GetAllSeverities(), "Id", "Name", bugReport.SeverityId);
-            ViewBag.ProductId = new SelectList(await productEntity.GetAllProducts(), "Id", "Name", bugReport.ProductId);
-            ViewBag.StatusId = new SelectList(await statusEntity.GetAllStatus(), "Id", "Name", bugReport.StatusId);
-            ViewBag.Tags = new SelectList(await tagEntity.GetAllTags(), "Id", "Name");
+            ViewBag.PriorityId = new SelectList(priorityEntity.GetAllPriorities(), "Id", "Name", bugReport.PriorityId);
+            ViewBag.SeverityId = new SelectList(severityEntity.GetAllSeverities(), "Id", "Name", bugReport.SeverityId);
+            ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name", bugReport.ProductId);
+            ViewBag.StatusId = new SelectList(statusEntity.GetAllStatus(), "Id", "Name", bugReport.StatusId);
+            ViewBag.Tags = new SelectList(tagEntity.GetAllTags(), "Id", "Name");
 
             var viewModel = new EditBugReportViewModel(bugReport);
 
@@ -57,18 +57,18 @@ namespace BugMania.BugReportControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(EditBugReportViewModel editBugReportViewModel)
+        public ActionResult EditReport(EditBugReportViewModel editBugReportViewModel)
         {
             if (ModelState.IsValid)
             {
-                if (await bugReportEntity.UpdateBugReport(editBugReportViewModel) == false) throw new Exception();
+                if (bugReportEntity.UpdateBugReport(editBugReportViewModel) == false) throw new Exception();
                 return Redirect("/Report/Details/" + editBugReportViewModel.Id);
             }
 
-            ViewBag.PriorityId = new SelectList(await priorityEntity.GetAllPriorities(), "Id", "Name", editBugReportViewModel.PriorityId);
-            ViewBag.SeverityId = new SelectList(await severityEntity.GetAllSeverities(), "Id", "Name", editBugReportViewModel.SeverityId);
-            ViewBag.ProductId = new SelectList(await productEntity.GetAllProducts(), "Id", "Name", editBugReportViewModel.ProductId);
-            ViewBag.StatusId = new SelectList(await statusEntity.GetAllStatus(), "Id", "Name", editBugReportViewModel.StatusId);
+            ViewBag.PriorityId = new SelectList(priorityEntity.GetAllPriorities(), "Id", "Name", editBugReportViewModel.PriorityId);
+            ViewBag.SeverityId = new SelectList(severityEntity.GetAllSeverities(), "Id", "Name", editBugReportViewModel.SeverityId);
+            ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name", editBugReportViewModel.ProductId);
+            ViewBag.StatusId = new SelectList(statusEntity.GetAllStatus(), "Id", "Name", editBugReportViewModel.StatusId);
             
             return View("/Views/BugReport/EditBugReportUI.cshtml", editBugReportViewModel);
         }

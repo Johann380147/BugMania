@@ -22,25 +22,25 @@ namespace BugMania.Entities
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task<ApplicationUser> GetUserById(string id)
+        public ApplicationUser GetUserById(string id)
         {
             ApplicationUser user;
 
-            user = await db.Users
+            user = db.Users
                 .Include(b => b.Role)
                 .Include(b => b.Groups)
                 .Include(b => b.MemberOf)
-                .FirstOrDefaultAsync(i => i.Id == id);
+                .FirstOrDefault(i => i.Id == id);
 
             return user;
         }
 
-        public async Task<ApplicationUser> GetUserByEmail(string email, ApplicationDbContext context)
+        public ApplicationUser GetUserByEmail(string email, ApplicationDbContext context)
         {
             ApplicationUser user;
             
-            user = await context.Users
-                .FirstOrDefaultAsync(i => i.Email == email);
+            user = context.Users
+                .FirstOrDefault(i => i.Email == email);
 
             return user;
         }
@@ -54,6 +54,23 @@ namespace BugMania.Entities
                 .FirstOrDefault(i => i.UserName == username);
 
             return user.Role;
+        }
+
+        public ApplicationUser GetUserWithGroup (string id)
+        {
+            try
+            {
+                var user = db.Users
+                .Where(u => u.Id == id)
+                .Include(g => g.MemberOf.Select(m => m.Group)) // Includes MemberOf Collection followed by MemberOf.Group
+                .Single();
+                return user;
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
 
         public bool VerifyUserRole(string email, string role)
@@ -97,7 +114,7 @@ namespace BugMania.Entities
                 .ToList();
         }
 
-        public async Task<bool> UpdateUsersRole(IList<AssignAccountRoleViewModel> usersViewModel)
+        public bool UpdateUsersRole(IList<AssignAccountRoleViewModel> usersViewModel)
         {
             List<ApplicationUser> lst = new List<ApplicationUser>();
             var context = HttpContext.Current.GetOwinContext().Get<ApplicationDbContext>();
@@ -111,7 +128,7 @@ namespace BugMania.Entities
             }
             try
             {
-                await context.SaveChangesAsync();
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)

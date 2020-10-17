@@ -18,21 +18,19 @@ namespace BugMania.Controllers.Group
     [RoutePrefix("Group")]
     public class ViewGroupController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationUserEntity userEntity = new ApplicationUserEntity();
         private ProductEntity productEntity = new ProductEntity();
 
         // GET: Group
         [Route]
         [Route("View")]
-        public async Task<ActionResult> View()
+        public ActionResult View()
         {
             var id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var user = db.Users.Where(u => u.Id == id)
-                .Include(g => g.MemberOf.Select(m => m.Group)) // Includes MemberOf Collection followed by MemberOf.Group
-                .Single();
+            var user = userEntity.GetUserWithGroup(id);
             var groupsViewModel = new GroupsViewModel(user);
 
-            ViewBag.ProductId = new SelectList(await productEntity.GetAllProducts(), "Id", "Name");
+            ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name");
             return View("/Views/Group/ViewGroupUI.cshtml", groupsViewModel);
         }
     }

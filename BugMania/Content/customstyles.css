@@ -57,7 +57,7 @@ ul.navbar-nav li.dropdown a.dropdown-toggle:active {
     display:flex;
     flex-direction:column;
     justify-content:center;
-    background-color: #f4faff;
+    background-color: #f69d12;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 10px 20px 5px 20px;
     margin: 5px;
@@ -167,4 +167,72 @@ ul.navbar-nav li.dropdown a.dropdown-toggle:active {
 
 .text-align-center {
     text-align:center;
+}
+
+.msg-container {
+    min-height: 20px;
+    margin-bottom:20px;
+}
+
+.msg-text {
+    font-size:14px;
+    border:1px solid #000000;
+}
+
+.log-container {
+    display:flex;
+    flex-direction:column;
+    margin-bottom:5%;
+}
+
+.log-card {
+    display:flex;
+    flex-direction:column;
+    min-height:200px;
+    /*background-color:#f69d12;*/
+    margin-bottom:50px;
+}
+
+.log-header {
+    margin:auto;
+}
+
+.big-headers {
+    font-size: 40px;
+    color:#000;
+}
+
+.log-content {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    flex-wrap:nowrap;
+}
+
+.log-profile-container {
+    display:flex;
+    flex-direction:column;
+}
+
+.log-icon {
+    margin:auto;
+}
+
+.log-profile {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    font-size: 40px;
+    color: #000;
+}
+
+.log-profile-email {
+    font-size: 40px;
+    color: #000;
+}
+
+.log-profile-count {
+    font-size: 40px;
+    color: #000;
+    margin: auto;
 }

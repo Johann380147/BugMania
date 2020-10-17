@@ -9,19 +9,18 @@ using System.Web;
 using System.Web.Mvc;
 using BugMania.DataContexts;
 using BugMania.Shapes;
-using Microsoft.AspNet.Identity;
-using BugMania.Models;
-using BugMania.Helpers;
 using BugMania.Entities;
+using BugMania.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BugMania.Controllers.Group
 {
-    public class DeleteGroupController : Controller
+    public class ViewDetailedGroupController : Controller
     {
         private GroupEntity groupEntity = new GroupEntity();
 
-        // GET: Group/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        // GET: Group/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -33,14 +32,6 @@ namespace BugMania.Controllers.Group
             //    return HttpNotFound();
             //}
             return View();
-        }
-
-        // POST: Group/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            return RedirectToAction("Index");
         }
     }
 }

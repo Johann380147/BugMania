@@ -1,0 +1,152 @@
+﻿@model BugMania.Models.LogViewModel
+
+@using BugMania.Helpers;
+
+<div class="log-container">
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Number of Bug Reports (Weekly)</label>
+        </div>
+        <div class="log-content">
+            <div class="log-profile-container">
+                <div class="log-icon"><img src="~/Content/Images/crown_2.png" /></div>
+                <div class="log-profile">
+                    @Model.numberWeeklyNewReports
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Number of Resolved Bug Reports (Weekly)</label>
+        </div>
+        <div class="log-content">
+            <div class="log-profile-container">
+                <div class="log-icon"><img src="~/Content/Images/crown_2.png" /></div>
+                <div class="log-profile">
+                    @Model.numberWeeklyResolvedReports
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Number of Bug Reports (Monthly)</label>
+        </div>
+        <div class="log-content">
+            <div class="log-profile-container">
+                <div class="log-icon"><img src="~/Content/Images/crown_2.png" /></div>
+                <div class="log-profile">
+                    @Model.numberMonthlyNewReports
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Number of Resolved Bug Reports (Monthly)</label>
+        </div>
+        <div class="log-content">
+            <div class="log-profile-container">
+                <div class="log-icon"><img src="~/Content/Images/crown_2.png" /></div>
+                <div class="log-profile">
+                    @Model.numberMonthlyResolvedReports
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Most Bugs Reported (All-Time)</label>
+        </div>
+        <div class="log-content">
+            @if (Model.TopThreeReported != null)
+            {
+                var crownList = Model.TopThreeReported.GetCrownList();
+                for (int i = 0; i < Model.TopThreeReported.Count(); i++)
+                {
+                    <div class="log-profile-container">
+                        <div class="log-icon">
+                            <img src=@crownList.ElementAt(i) />
+                        </div>
+                        <div class="log-profile">
+                            <div class="log-profile-email">
+                                @Model.TopThreeReported.ElementAt(i).Log.Editor.Email
+                            </div>
+                            <div class="log-profile-count">
+                                @Model.TopThreeReported.ElementAt(i).Count
+                            </div>    
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Most Bugs Resolved (All-Time)</label>
+        </div>
+        <div class="log-content">
+            @if (Model.TopThreeDeveloper != null)
+            {
+                var crownList = Model.TopThreeDeveloper.GetCrownList();
+                for (int i = 0; i < Model.TopThreeDeveloper.Count(); i++)
+                {
+                    <div class="log-profile-container">
+                        <div class="log-icon">
+                            <img src="@crownList.ElementAt(i)" />
+                        </div>
+                        <div class="log-profile">
+                            <div class="log-profile-email">
+                                @Model.TopThreeDeveloper.ElementAt(i).Log.Editor.Email
+                            </div>
+                            <div class="log-profile-count">
+                                @Model.TopThreeDeveloper.ElementAt(i).Count
+                            </div>
+                        </div>
+                
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="log-card">
+        <div class="log-header">
+            <label class="big-headers">Most Bugs Reported by a Reporter (All-Time)</label>
+        </div>
+        <div class="log-content">
+            @if (Model.TopThreeReporter != null)
+            {
+                var crownList = Model.TopThreeReporter.GetCrownList();
+                for (int i = 0; i < Model.TopThreeReporter.Count(); i++)
+                {
+                    <div class="log-profile-container">
+                        <div class="log-icon">
+                            <img src="@crownList.ElementAt(i)" />
+                        </div>
+                        <div class="log-profile">
+                            <div class="log-profile-email">
+                                @Model.TopThreeReporter.ElementAt(i).Log.Editor.Email
+                            </div>
+                            <div class="log-profile-count">
+                                @Model.TopThreeReporter.ElementAt(i).Count
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //var colors = ['#ff0000', '#00ff00', '#0000ff'];
+            //var random_color = colors[Math.floor(Math.random() * colors.length)];
+            //$('.log-card').css('background-color', random_color);
+        });
+    </script>
+}

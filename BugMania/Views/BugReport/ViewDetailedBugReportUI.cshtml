@@ -10,7 +10,7 @@
 
 
 
-@Html.ActionLink(" ", "View", "ViewAllBugReport", null,
+@Html.ActionLink(" ", "ViewAllReports", "ViewAllBugReport", null,
     new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
         Title = "Back" })
 <div class="report">
@@ -86,14 +86,14 @@
             @if (User.IsInRole("Admin") ||
                 User.IsInRole("Triager"))
             {
-                @Html.ActionLink("Edit", "Edit", "EditBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
+                @Html.ActionLink("Edit", "EditReport", "EditBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
                 <label>|</label>
                 @Html.ActionLink("Delete", "Delete", "DeleteBugReport", new { id = Model.Id }, new { })
             }
             else if (User.IsInRole("Reviewer") ||
             User.IsInRole("Developer"))
             {
-                @Html.ActionLink("Edit", "Edit", "EditBugReport", new { id = Model.Id }, new { })
+                @Html.ActionLink("Edit", "EditReport", "EditBugReport", new { id = Model.Id }, new { })
             }
 
         </div>

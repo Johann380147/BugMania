@@ -65,6 +65,12 @@
         <div class="col-md-2"></div>
     </div>
 
+    <div class="msg-container container">
+        <div class="col-md-2"></div>
+        <div class="col-md-6 msg-text" hidden="hidden"></div>
+        <div class="col-md-4"></div>
+    </div>
+
     <div class="container">
         <div class="col-md-2"></div>
         <div class="col-md-8 div-zero-margin p-l-5">
@@ -100,12 +106,21 @@
                     url: "/AssignAccountRole/Assign",
                     data: data,
                     success: function (response) {
+                        $(".msg-text").css("background-color", "#B2FF59");
+                        $(".msg-text").html("Changes saved successfully");
+                        $(".msg-text").show();
+                        $(".msg-text").fadeOut(3000, function () {
+                            window.location.href = "/Account/Role/Assign";
+                        });
                     },
                     error: function (request, status, error) {
                         alert(request.responseText);
+                        $(".msg-text").css("background-color", "#FF9E80");
+                        $(".msg-text").html("Could not save changes, try again later");
+                        $(".msg-text").show();
+                        $(".msg-text").fadeOut(3000);
                     }
                 })
-                e.preventDefault();
             });
         });
     </script>

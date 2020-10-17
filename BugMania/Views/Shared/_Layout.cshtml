@@ -20,13 +20,14 @@
 
             <div>
                 <img src="~/Content/Images/bug.svg" class="img-icon pull-left" />
-                @Html.ActionLink("BugMania", "View", "ViewAllBugReport", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("BugMania", "ViewAllReports", "ViewAllBugReport", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
         </div>
         <div class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Logs", "ViewAllLogs", "ViewLog")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>

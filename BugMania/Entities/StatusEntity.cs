@@ -21,13 +21,13 @@ namespace BugMania.Entities
 
         // Find - gets local, SingleOrDefault - force get from DB
         // .Include loads associated data from parent table into child object
-        public async Task<List<Status>> GetAllStatus()
+        public List<Status> GetAllStatus()
         {
             IQueryable<Status> status;
 
             status = db.Status;
 
-            var result = await status.ToListAsync();
+            var result = status.ToList();
             return result;
         }
     }

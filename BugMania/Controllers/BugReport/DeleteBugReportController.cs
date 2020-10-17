@@ -24,13 +24,13 @@ namespace BugMania.BugReportControllers
 
         // GET: BugReport/Delete/5
         [Route("Delete/{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = await bugReportEntity.GetSingleBugReport(id);
+            BugReport bugReport = bugReportEntity.GetSingleBugReport(id);
             if (bugReport == null)
             {
                 return HttpNotFound();
@@ -44,7 +44,7 @@ namespace BugMania.BugReportControllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             bugReportEntity.DeleteBugReport(id);
-            return RedirectToAction("View", "ViewAllBugReport");
+            return RedirectToAction("ViewAllReports", "ViewAllBugReport");
         }
     }
 }

@@ -17,19 +17,19 @@ using BugMania.Entities;
 namespace BugMania.BugReportControllers
 {
     [RoutePrefix("Report")]
-    public class ViewSingleBugReportController : Controller
+    public class ViewDetailedBugReportController : Controller
     {
         private BugReportEntity bugReportEntity = new BugReportEntity();
 
         [Route("Details/{id}")]
-        public async Task<ActionResult> Details(int id)
+        public ActionResult ViewDetailedReport(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var bugReport = await bugReportEntity.GetSingleBugReport(id);
+            var bugReport = bugReportEntity.GetSingleBugReport(id);
             if (bugReport == null)
             {
                 return HttpNotFound();
@@ -37,7 +37,7 @@ namespace BugMania.BugReportControllers
 
             DetailsBugReportViewModel detailsModel = new DetailsBugReportViewModel(bugReport);
 
-            return View("/Views/BugReport/ViewSingleBugReportUI.cshtml", detailsModel);
+            return View("/Views/BugReport/ViewDetailedBugReportUI.cshtml", detailsModel);
         }
     }
 }

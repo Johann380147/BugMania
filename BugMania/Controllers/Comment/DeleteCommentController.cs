@@ -18,5 +18,26 @@ namespace BugMania.Controllers.Comment
 {
     public class DeleteCommentController : Controller
     {
+        CommentEntity commentEntity = new CommentEntity();
+
+        // GET: Comment/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            return View();
+        }
+
+        // POST: Comment/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            commentEntity.DeleteComment(id);
+            return RedirectToAction("ViewAllReports", "ViewAllBugReport");
+        }
     }
 }

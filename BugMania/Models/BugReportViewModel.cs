@@ -191,4 +191,22 @@ namespace BugMania.Models
 
         public Role Role { get; set; }
     }
+
+    public class LogViewModel
+    {
+        public int numberWeeklyNewReports { get; set; }
+        public int numberWeeklyResolvedReports { get; set; }
+        public int numberMonthlyNewReports { get; set; }
+        public int numberMonthlyResolvedReports { get; set; }
+
+        public IEnumerable<LogCount> TopThreeReported { get; set; }
+        public IEnumerable<LogCount> TopThreeDeveloper { get; set; }
+        public IEnumerable<LogCount> TopThreeReporter { get; set; }
+    }
+
+    public class LogCount
+    {
+        public Log Log { get; set; }
+        public int Count { get; set; }
+    }
 }

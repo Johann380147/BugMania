@@ -21,9 +21,14 @@ namespace BugMania.Entities
 
         public ICollection<Log> GetLogs(int days)
         {
-            var currDate = DateTime.UtcNow;
+            var currDate = DateTime.UtcNow.AddDays(days * -1);
             var logs = db.Logs
-                .Where(t => currDate.Subtract(t.EditDateTime).TotalDays <= days)
+                .Include(o => o.Operation)
+                .Include(e => e.Editor)
+                .Include(r => r.Editor.Role)
+                .Include(b => b.BugReport)
+                .Include(s => s.BugReport.Status)
+                .Where(t => t.EditDateTime >= currDate)
                 .ToList();
 
             return logs;

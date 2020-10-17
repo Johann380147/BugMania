@@ -21,7 +21,7 @@ namespace BugMania.Entities
 
         // Find - gets local, SingleOrDefault - force get from DB
         // .Include loads associated data from parent table into child object
-        public async Task<List<Comment>> GetAllComments(int id)
+        public List<Comment> GetAllComments(int id)
         {
             IQueryable<Comment> comments;
 
@@ -29,10 +29,13 @@ namespace BugMania.Entities
                 .Include(b => b.Commenter)
                 .Where(br => br.BugReportId == id);
 
-            var result = await comments.ToListAsync();
+            var result = comments.ToList();
             if (result != null)
             {
-                var sorted = result.OrderByDescending(t => t.CommentDateTime).ToList();
+                var sorted = result
+                    .OrderByDescending(t => t.CommentDateTime)
+                    .ToList();
+
                 return sorted;
             }
             else
@@ -41,7 +44,7 @@ namespace BugMania.Entities
             }
         }
 
-        public async Task<bool> AddComment(CreateCommentViewModel createCommentViewModel)
+        public bool AddComment(CreateCommentViewModel createCommentViewModel)
         {
             var comment = new Comment();
             comment.BugReportId = createCommentViewModel.BugReportId;
@@ -49,18 +52,14 @@ namespace BugMania.Entities
             comment.UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             comment.CommentDateTime = DateTime.UtcNow;
 
-            var _c = db.BugReports.Where(a => a.Id == comment.BugReportId).Single();
-
-            if (_c != null)
-            {
-                comment.BugReport = _c;
-            }
-
-
-            db.Comments.Add(comment);
             try
             {
-                await db.SaveChangesAsync();
+                comment.BugReport = db.BugReports
+                    .Where(a => a.Id == comment.BugReportId)
+                    .Single();
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
                 return true;
             }
             catch
@@ -69,12 +68,28 @@ namespace BugMania.Entities
             }
         }
 
-        public async Task<bool> UpdateComment(Comment comment)
+        public bool UpdateComment(Comment comment)
         {
             db.Entry(comment).State = EntityState.Modified;
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteComment(int id)
+        {
+            var comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
+
+            try
+            {
+                db.SaveChanges();
                 return true;
             }
             catch

@@ -21,6 +21,8 @@
         
         public int OperationId { get; set; }
 
+        public string Status { get; set; }
+
         public Operation Operation { get; set; }
 
         public BugReport BugReport { get; set; }

@@ -184,7 +184,8 @@
     <Compile Include="Controllers\BugReport\DeleteBugReportController.cs" />
     <Compile Include="Controllers\BugReport\EditBugReportController.cs" />
     <Compile Include="Controllers\BugReport\ViewAllBugReportController.cs" />
-    <Compile Include="Controllers\BugReport\ViewSingleBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\ViewFilteredBugReportController.cs" />
+    <Compile Include="Controllers\BugReport\ViewDetailedBugReportController.cs" />
     <Compile Include="Controllers\Comment\CreateCommentController.cs" />
     <Compile Include="Controllers\Comment\DeleteCommentController.cs" />
     <Compile Include="Controllers\Comment\EditCommentController.cs" />
@@ -192,8 +193,10 @@
     <Compile Include="Controllers\Group\CreateGroupController.cs" />
     <Compile Include="Controllers\Group\DeleteGroupController.cs" />
     <Compile Include="Controllers\Group\EditGroupController.cs" />
+    <Compile Include="Controllers\Group\ViewDetailedGroupController.cs" />
     <Compile Include="Controllers\Group\ViewGroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Log\ViewLogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\Tag\CreateTagController.cs" />
@@ -255,6 +258,10 @@
     <Compile Include="DataContexts\Migrations\202010150303358_AddOperationTypeToLogs.designer.cs">
       <DependentUpon>202010150303358_AddOperationTypeToLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\Migrations\202010171718349_AddStatusNameToLog.cs" />
+    <Compile Include="DataContexts\Migrations\202010171718349_AddStatusNameToLog.designer.cs">
+      <DependentUpon>202010171718349_AddStatusNameToLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entities\BugReportEntity.cs" />
     <Compile Include="Entities\CommentEntity.cs" />
     <Compile Include="Entities\GroupEntity.cs" />
@@ -286,9 +293,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\bronze.png" />
+    <Content Include="Content\Images\crown.png" />
+    <Content Include="Content\Images\crown_2.png" />
     <Content Include="Content\customstyles.css" />
+    <Content Include="Content\Images\gold.png" />
     <Content Include="Content\Images\bug.svg" />
     <Content Include="Content\Images\default-profile.png" />
+    <Content Include="Content\Images\silver.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -458,15 +470,18 @@
     <Content Include="Views\Group\ViewGroupUI.cshtml" />
     <Content Include="Views\BugReport\CreateBugReportUI.cshtml" />
     <Content Include="Views\BugReport\DeleteBugReportUI.cshtml" />
-    <Content Include="Views\BugReport\ViewSingleBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\ViewDetailedBugReportUI.cshtml" />
     <Content Include="Views\BugReport\EditBugReportUI.cshtml" />
-    <Content Include="Views\BugReport\ViewAllBugReportUI.cshtml" />
+    <Content Include="Views\BugReport\ViewBugReportUI.cshtml" />
     <Content Include="Views\Comment\_CreateCommentUI.cshtml" />
     <Content Include="Views\Account\AssignAccountRoleUI.cshtml" />
     <Content Include="Views\BugReport\_ViewBugReportCardUI.cshtml" />
+    <Content Include="Views\Log\ViewAllLogUI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ViewFilteredBugReport\" />
+    <Folder Include="Views\ViewLog\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -529,6 +544,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\Migrations\202010150303358_AddOperationTypeToLogs.resx">
       <DependentUpon>202010150303358_AddOperationTypeToLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010171718349_AddStatusNameToLog.resx">
+      <DependentUpon>202010171718349_AddStatusNameToLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
