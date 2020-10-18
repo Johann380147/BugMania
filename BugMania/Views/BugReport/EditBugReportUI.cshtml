@@ -21,7 +21,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @id = "editBrTitle", @class = "form-control" } })
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.EditorFor(model => model.Title,
+                        new { htmlAttributes = new {
+                            @id = "editBrTitle",
+                            @class = "form-control" } })
+                }
+                else
+                {
+                    <input type="text" name="Title" id="editBrTitle" class="form-control" readonly="readonly" value=@Model.Title />
+                }
+
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -30,7 +41,19 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @id = "editBrDescription", @class = "form-control", @rows = "15" } })
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.EditorFor(model => model.Description,
+                        new { htmlAttributes = new {
+                            @id = "editBrDescription",
+                            @class = "form-control",
+                            @rows = "15" } })
+                }
+                else
+                {
+                    <textarea rows="15" name="Description" id="editBrDescription" class="form-control" readonly="readonly">@Model.Description</textarea>
+                }
+
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -39,7 +62,11 @@
         <div class="form-group">
             <label class="control-label col-md-2">Product</label>
             <div class="col-md-8">
-                @Html.DropDownList("ProductId", null, htmlAttributes: new { @id = "editBrProduct", @class = "form-control" })
+                @Html.DropDownList("ProductId",
+                    (SelectList)ViewBag.ProductList,
+                    htmlAttributes: new {
+                        @id = "editBrProduct",
+                        @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -48,7 +75,11 @@
         <div class="form-group">
             <label class="control-label col-md-2">Severity</label>
             <div class="col-md-8">
-                @Html.DropDownList("SeverityId", null, htmlAttributes: new { @id = "editBrSeverity", @class = "form-control" })
+                @Html.DropDownList("SeverityId",
+                    (SelectList)ViewBag.SeverityList,
+                    htmlAttributes: new {
+                        @id = "editBrSeverity",
+                        @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SeverityId, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -57,7 +88,11 @@
         <div class="form-group">
             <label class="control-label col-md-2">Priority</label>
             <div class="col-md-8">
-                @Html.DropDownList("PriorityId", null, htmlAttributes: new { @id = "editBrPriority", @class = "form-control" })
+                @Html.DropDownList("PriorityId",
+                    (SelectList)ViewBag.PriorityList,
+                    htmlAttributes: new {
+                        @id = "editBrPriority",
+                        @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -66,7 +101,11 @@
         <div class="form-group">
             <label class="control-label col-md-2">Status</label>
             <div class="col-md-8">
-                @Html.DropDownList("StatusId", null, htmlAttributes: new { @id = "editBrStatus", @class = "form-control" })
+                @Html.DropDownList("StatusId",
+                    (IEnumerable<SelectListItem>)ViewBag.StatusList,
+                    htmlAttributes: new {
+                        @id = "editBrStatus",
+                        @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2"></div>
@@ -83,8 +122,11 @@
                 </select>
             </div>
             <div class="btn-edit-container col-md-1">
-                <div><span id="btnShowGetUserModal" class="btn btn-primary btn-std m-b-10">Add</span></div>
-                <div><span id="btnRemoveUserEmail" class="btn btn-warning btn-std">Remove</span></div>
+                @if (User.IsInRole("Admin") || User.IsInRole("Triager"))
+                {
+                    <div><span id="btnShowGetUserModal" class="btn btn-primary btn-std m-b-10">Add</span></div>
+                    <div><span id="btnRemoveUserEmail" class="btn btn-warning btn-std">Remove</span></div>
+                }
             </div>
             <div class="col-md-6"></div>
         </div>
@@ -172,10 +214,10 @@
                     Id: $("#editBrId").val(),
                     Title: $("#editBrTitle").val(),
                     Description: $("#editBrDescription").val(),
-                    ProductId: $("#editBrProduct").val(),
-                    SeverityId: $("#editBrSeverity").val(),
-                    PriorityId: $("#editBrPriority").val(),
-                    StatusId: $("#editBrStatus").val(),
+                    ProductId: $("#editBrProduct option:selected").val(),
+                    SeverityId: $("#editBrSeverity option:selected").val(),
+                    PriorityId: $("#editBrPriority option:selected").val(),
+                    StatusId: $("#editBrStatus option:selected").val(),
                     Email: getCollectionOfEmails(),
                     __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
                 };
