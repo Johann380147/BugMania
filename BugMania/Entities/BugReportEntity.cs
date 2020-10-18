@@ -31,7 +31,7 @@ namespace BugMania.Entities
                 .Include(b => b.Status)
                 .Include(b => b.Tags)
                 .OrderByDescending(t => t.LastEditDateTime)
-                .ThenBy(t => t.CreateDateTime)
+                .ThenByDescending(t => t.CreateDateTime)
                 .Skip(skipCount)
                 .Take(takeCount);
             return model;
@@ -51,7 +51,7 @@ namespace BugMania.Entities
                 .Include(b => b.Status)
                 .Include(b => b.Tags)
                 .OrderByDescending(t => t.LastEditDateTime)
-                .ThenBy(t => t.CreateDateTime)
+                .ThenByDescending(t => t.CreateDateTime)
                 .Skip(skipCount)
                 .Take(takeCount);
             return model;
