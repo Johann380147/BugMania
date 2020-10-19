@@ -29,7 +29,6 @@ namespace BugMania.Entities
             user = db.Users
                 .Include(b => b.Role)
                 .Include(b => b.Groups)
-                .Include(b => b.MemberOf)
                 .FirstOrDefault(i => i.Id == id);
 
             return user;
@@ -62,7 +61,7 @@ namespace BugMania.Entities
             {
                 var user = db.Users
                 .Where(u => u.Id == id)
-                .Include(g => g.MemberOf.Select(m => m.Group)) // Includes MemberOf Collection followed by MemberOf.Group
+                .Include(g => g.Groups)
                 .Single();
                 return user;
             }
@@ -135,6 +134,11 @@ namespace BugMania.Entities
             {
                 throw ex;
             }
+        }
+
+        public void DetachContext(ApplicationUser user)
+        {
+            db.Entry(user).State = EntityState.Detached;
         }
     }
 }

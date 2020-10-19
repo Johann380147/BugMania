@@ -58,11 +58,19 @@ ul.navbar-nav li.dropdown a.dropdown-toggle:active {
     flex-direction:column;
     justify-content:center;
     background-color: #f69d12;
+    color:#fff1d8;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 10px 20px 5px 20px;
     margin: 5px;
     min-width:150px;
     min-height:150px;
+}
+
+.group-card:hover,
+.group-card:visited,
+.group-card:active {
+    background-color: #f6b05e;
+    color:#fff;
 }
 
 .group-content {

@@ -104,7 +104,7 @@ namespace BugMania.Models
         public GroupsViewModel(ApplicationUser user)
         {
             this.UserName = user.UserName;
-            this.MemberOf = user.MemberOf;
+            this.MemberOf = user.Groups;
         }
 
         public string UserName { get; set; }
@@ -116,7 +116,7 @@ namespace BugMania.Models
         [Display(Name = "Product")]
         public int ProductId { get; set; }
 
-        public ICollection<GroupMember> MemberOf { get; set; }
+        public ICollection<Group> MemberOf { get; set; }
     }
 
     public class EditBugReportViewModel

@@ -11,7 +11,7 @@ namespace BugMania.Shapes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
         {
-            GroupMembers = new HashSet<GroupMember>();
+            GroupMembers = new HashSet<ApplicationUser>();
         }
 
         [Key]
@@ -28,6 +28,6 @@ namespace BugMania.Shapes
         public Product Product { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<GroupMember> GroupMembers { get; set; }
+        public ICollection<ApplicationUser> GroupMembers { get; set; }
     }
 }

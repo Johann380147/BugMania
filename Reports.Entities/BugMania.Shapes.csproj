@@ -62,7 +62,6 @@
     <Compile Include="BugReport.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Group.cs" />
-    <Compile Include="GroupMember.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Operation.cs" />

@@ -12,7 +12,6 @@ namespace BugMania.Shapes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            GroupMembers = new HashSet<GroupMember>();
             Users = new HashSet<ApplicationUser>();
         }
         
@@ -23,9 +22,6 @@ namespace BugMania.Shapes
         [Display(Name = "Role")]
         public string Name { get; set; }
         public string Description { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<GroupMember> GroupMembers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<ApplicationUser> Users { get; set; }

@@ -14,7 +14,6 @@ namespace BugMania.Shapes
         {
             Composer = new HashSet<BugReport>();
             Groups = new HashSet<Group>();
-            MemberOf = new HashSet<GroupMember>();
             SubscriptionList = new HashSet<BugReport>();
             AssignedReports = new HashSet<BugReport>();
             CommentsMade = new HashSet<Comment>();
@@ -35,10 +34,7 @@ namespace BugMania.Shapes
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<Group> Groups { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<GroupMember> MemberOf { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<BugReport> SubscriptionList { get; set; }
 

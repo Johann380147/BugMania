@@ -84,12 +84,17 @@ textarea {
     color: #fff;
 }
 
-.navbar-header > *:hover {
+.navbar-header > *:hover,
+.navbar-header > *:visited,
+.navbar-header > *:active {
     background-color: #1469af;
     color: #fff;
 }
 
-ul.navbar-nav li a:hover {
+ul.navbar-nav li a:hover,
+ul.navbar-nav li a:visited,
+ul.navbar-nav li a:active
+{
     background-color: #1469af;
     color: #fff;
 }

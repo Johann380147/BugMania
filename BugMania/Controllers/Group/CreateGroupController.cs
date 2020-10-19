@@ -21,6 +21,7 @@ namespace BugMania.Controllers
     {
         private GroupEntity groupEntity = new GroupEntity();
         private ProductEntity productEntity = new ProductEntity();
+        private ApplicationUserEntity userEntity = new ApplicationUserEntity();
 
         // GET: Group/Create
         [Route("Create")]
@@ -39,10 +40,13 @@ namespace BugMania.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = userEntity.GetUserById(HttpContext.User.Identity.GetUserId());
+                userEntity.DetachContext(user);
+
                 BugMania.Shapes.Group group = new BugMania.Shapes.Group();
                 group.Name = groupViewModel.Name;
                 group.ProductId = groupViewModel.ProductId;
-
+                group.GroupMembers.Add(user);
                 groupEntity.AddGroup(group);
 
                 return RedirectToAction("View", "ViewGroup");

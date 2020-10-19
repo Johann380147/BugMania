@@ -262,6 +262,14 @@
     <Compile Include="DataContexts\Migrations\202010171718349_AddStatusNameToLog.designer.cs">
       <DependentUpon>202010171718349_AddStatusNameToLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContexts\Migrations\202010190508591_RemoveGroupMemberLinkToRoles.cs" />
+    <Compile Include="DataContexts\Migrations\202010190508591_RemoveGroupMemberLinkToRoles.designer.cs">
+      <DependentUpon>202010190508591_RemoveGroupMemberLinkToRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Migrations\202010190552029_ChangeGroupMemberToJoinTableForUserToGroups.cs" />
+    <Compile Include="DataContexts\Migrations\202010190552029_ChangeGroupMemberToJoinTableForUserToGroups.designer.cs">
+      <DependentUpon>202010190552029_ChangeGroupMemberToJoinTableForUserToGroups.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entities\BugReportEntity.cs" />
     <Compile Include="Entities\CommentEntity.cs" />
     <Compile Include="Entities\GroupEntity.cs" />
@@ -547,6 +555,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContexts\Migrations\202010171718349_AddStatusNameToLog.resx">
       <DependentUpon>202010171718349_AddStatusNameToLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010190508591_RemoveGroupMemberLinkToRoles.resx">
+      <DependentUpon>202010190508591_RemoveGroupMemberLinkToRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\Migrations\202010190552029_ChangeGroupMemberToJoinTableForUserToGroups.resx">
+      <DependentUpon>202010190552029_ChangeGroupMemberToJoinTableForUserToGroups.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

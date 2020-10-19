@@ -21,7 +21,6 @@ namespace BugMania.DataContexts
         public virtual DbSet<BugReport> BugReports { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<GroupMember> GroupMembers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
@@ -107,20 +106,8 @@ namespace BugMania.DataContexts
 
             modelBuilder.Entity<Group>()
                 .HasMany(e => e.GroupMembers)
-                .WithRequired(e => e.Group)
-                .HasForeignKey<int>(s => s.GroupId)
-                .WillCascadeOnDelete(false);
-            
-            modelBuilder.Entity<GroupMember>()
-                .HasRequired(e => e.User)
-                .WithMany(e => e.MemberOf)
-                .HasForeignKey<string>(s => s.UserId)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<GroupMember>()
-                .HasMany(e => e.Roles)
-                .WithMany(e => e.GroupMembers)
-                .Map(m => m.ToTable("GroupMemberRoles").MapLeftKey("GroupMemberId").MapRightKey("RoleId"));
+                .WithMany(e => e.Groups)
+                .Map(m => m.ToTable("GroupMembers").MapLeftKey("GroupId").MapRightKey("MemberId"));
 
             modelBuilder.Entity<Log>()
                 .HasRequired(e => e.Editor)
