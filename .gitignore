@@ -266,3 +266,15 @@ __pycache__/
 *.pyc
 /BugMania/Properties/PublishProfiles/BugMania2020 - Web Deploy.pubxml
 /BugMania/Web.config
+/BugMania/Diagrams/TagClassDiagram.cd
+/BugMania/Diagrams/ModelClassDiagram.cd
+/BugMania/Diagrams/LogClassDiagram.cd
+/BugMania/Diagrams/HelperClassDiagram.cd
+/BugMania/Diagrams/GroupClassDiagram.cd
+/BugMania/Diagrams/EntitiesClassDiagram.cd
+/BugMania/Diagrams/CommentClassDiagram.cd
+/BugMania/Diagrams/BugReportClassDiagram.cd
+/BugMania/Diagrams/AccountClassDiagram.cd
+/ShapesClassDiagram.png
+/Reports.Entities/EntitiesClassDiagram.cd
+/Reports.Entities/Diagrams/ShapeClassDiagram.cd

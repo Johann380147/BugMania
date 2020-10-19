@@ -14,7 +14,7 @@ using BugMania.Models;
 using BugMania.Helpers;
 using BugMania.Entities;
 
-namespace BugMania.BugReportControllers
+namespace BugMania.Controllers.BugReport
 {
 
     [RoutePrefix("Report")]

@@ -13,7 +13,7 @@ using BugMania.Models;
 using BugMania.Entities;
 using Microsoft.AspNet.Identity;
 
-namespace BugMania.Controllers
+namespace BugMania.Controllers.Comment
 {
     public class CreateCommentController : Controller
     {

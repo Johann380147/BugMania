@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using BugMania.DataContexts;
 using BugMania.Shapes;
 
-namespace BugMania.Controllers
+namespace BugMania.Controllers.Tag
 {
     public class ViewTagController : Controller
     {

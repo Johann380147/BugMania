@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BugMania.BugReportControllers
+namespace BugMania.Controllers.Account
 {
     public class VerifyAccountController : Controller
     {

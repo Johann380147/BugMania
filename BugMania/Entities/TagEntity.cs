@@ -30,5 +30,20 @@ namespace BugMania.Entities
             var result = tag.ToList();
             return result;
         }
+
+        public bool AddTag(Tag tag)
+        {
+            db.Tags.Add(tag);
+
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

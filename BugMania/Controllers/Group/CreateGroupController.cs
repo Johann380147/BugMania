@@ -13,7 +13,7 @@ using BugMania.Entities;
 using BugMania.Models;
 using Microsoft.AspNet.Identity;
 
-namespace BugMania.Controllers
+namespace BugMania.Controllers.Group
 {
     [RoutePrefix("Group")]
     [Authorize]

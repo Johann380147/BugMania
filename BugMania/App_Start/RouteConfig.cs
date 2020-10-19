@@ -18,7 +18,7 @@ namespace BugMania
                 name: "DefaultPath",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "ViewAllBugReport", action = "ViewAllReports", id = UrlParameter.Optional },
-                namespaces: new[] { "BugMania.BugReportControllers", "BugMania.Controllers" }
+                namespaces: new[] { "BugMania.Controllers" }
             );
         }
     }

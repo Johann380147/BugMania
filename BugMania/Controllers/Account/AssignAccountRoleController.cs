@@ -14,7 +14,7 @@ using BugMania.Models;
 using BugMania.Helpers;
 using BugMania.Entities;
 
-namespace BugMania.BugReportControllers
+namespace BugMania.Controllers.Account
 {
     [RoutePrefix("Account/Role")]
     [Authorize(Roles = "Admin")]

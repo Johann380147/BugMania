@@ -198,7 +198,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Log\ViewLogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\Tag\CreateTagController.cs" />
     <Compile Include="Controllers\Tag\EditTagController.cs" />
     <Compile Include="Controllers\Tag\ViewTagController.cs" />
@@ -278,7 +277,6 @@
     <Compile Include="Entities\PriorityEntity.cs" />
     <Compile Include="Entities\StatusEntity.cs" />
     <Compile Include="Entities\ApplicationUserEntity.cs" />
-    <Compile Include="Entities\GroupMemberEntity.cs" />
     <Compile Include="Entities\TagEntity.cs" />
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SeverityEntity.cs" />
@@ -321,6 +319,15 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Diagrams\BugReportClassDiagram.cd" />
+    <Content Include="Diagrams\AccountClassDiagram.cd" />
+    <Content Include="Diagrams\CommentClassDiagram.cd" />
+    <Content Include="Diagrams\GroupClassDiagram.cd" />
+    <Content Include="Diagrams\LogClassDiagram.cd" />
+    <Content Include="Diagrams\TagClassDiagram.cd" />
+    <Content Include="Diagrams\EntitiesClassDiagram.cd" />
+    <Content Include="Diagrams\HelperClassDiagram.cd" />
+    <Content Include="Diagrams\ModelClassDiagram.cd" />
     <None Include="Properties\PublishProfiles\BugMania2020 - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -14,7 +14,7 @@ using BugMania.Models;
 using BugMania.Helpers;
 using BugMania.Entities;
 
-namespace BugMania.BugReportControllers
+namespace BugMania.Controllers.BugReport
 {
     [RoutePrefix("Report")]
     [Authorize]
@@ -35,7 +35,7 @@ namespace BugMania.BugReportControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = bugReportEntity.GetSingleBugReport(id);
+            BugMania.Shapes.BugReport bugReport = bugReportEntity.GetSingleBugReport(id);
             if (bugReport == null)
             {
                 return HttpNotFound();

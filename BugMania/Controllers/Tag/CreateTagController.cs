@@ -19,6 +19,7 @@ namespace BugMania.Controllers.Tag
     public class CreateTagController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        TagEntity tagEntity = new TagEntity();
 
         public ActionResult Create()
         {
@@ -34,8 +35,7 @@ namespace BugMania.Controllers.Tag
         {
             if (ModelState.IsValid)
             {
-                db.Tags.Add(tag);
-                await db.SaveChangesAsync();
+                tagEntity.AddTag(tag);
                 return Redirect(Request.UrlReferrer.ToString());
             }
 
