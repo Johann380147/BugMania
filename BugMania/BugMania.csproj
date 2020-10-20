@@ -179,6 +179,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Account\AssignAccountRoleController.cs" />
+    <Compile Include="Controllers\Account\ExternalLoginAccountController.cs" />
+    <Compile Include="Controllers\Account\LoginAccountController.cs" />
+    <Compile Include="Controllers\Account\LogOffAccountController.cs" />
+    <Compile Include="Controllers\Account\RegisterAccountController.cs" />
     <Compile Include="Controllers\Account\VerifyAccountController.cs" />
     <Compile Include="Controllers\BugReport\CreateBugReportController.cs" />
     <Compile Include="Controllers\BugReport\DeleteBugReportController.cs" />
@@ -195,7 +199,6 @@
     <Compile Include="Controllers\Group\EditGroupController.cs" />
     <Compile Include="Controllers\Group\ViewDetailedGroupController.cs" />
     <Compile Include="Controllers\Group\ViewGroupController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Log\ViewLogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Tag\CreateTagController.cs" />
@@ -435,8 +438,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -495,8 +496,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ViewFilteredBugReport\" />
-    <Folder Include="Views\ViewLog\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
