@@ -28,7 +28,16 @@ namespace BugMania.Controllers.Group
         {
             var id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var user = userEntity.GetUserWithGroup(id);
-            var groupsViewModel = new GroupsViewModel(user);
+            GroupsViewModel groupsViewModel;
+            if (user != null)
+            {
+                groupsViewModel = new GroupsViewModel(user);
+            }
+            else
+            {
+                groupsViewModel = new GroupsViewModel();
+            }
+            
 
             ViewBag.ProductId = new SelectList(productEntity.GetAllProducts(), "Id", "Name");
             return View("/Views/Group/ViewGroupUI.cshtml", groupsViewModel);

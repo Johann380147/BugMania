@@ -9,6 +9,11 @@ namespace BugMania.Helpers
     {
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> newItems)
         {
+            if (collection == null ||
+                newItems == null)
+            {
+                return;
+            }
             foreach (T item in newItems)
             {
                 collection.Add(item);
@@ -55,7 +60,7 @@ namespace BugMania.Helpers
             {
                 return new List<string>(){
                     "/Content/Images/silver.png",
-                    "/Content/Images/gold.png",
+                    "/Content/Images/gold.png"
                 };
             }
             else

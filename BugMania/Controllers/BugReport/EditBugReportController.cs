@@ -56,6 +56,7 @@ namespace BugMania.Controllers.BugReport
             }
             else
             {
+                // Disable editing
                 ProductList = new SelectList(products, "Id", "Name", bugReport.ProductId, products.Select(t => t.Id));
                 SeverityList = new SelectList(severity, "Id", "Name", bugReport.SeverityId, severity.Select(t => t.Id));
                 PriorityList = new SelectList(priority, "Id", "Name", bugReport.PriorityId, priority.Select(t => t.Id));
@@ -81,7 +82,10 @@ namespace BugMania.Controllers.BugReport
         {
             if (ModelState.IsValid)
             {
-                if (bugReportEntity.UpdateBugReport(editBugReportViewModel) == false) throw new Exception();
+                if (bugReportEntity.UpdateBugReport(editBugReportViewModel) == false)
+                {
+                    throw new Exception("Could not update report.");
+                }
                 return Redirect("/Report/Details/" + editBugReportViewModel.Id);
             }
 
@@ -100,6 +104,7 @@ namespace BugMania.Controllers.BugReport
             }
             else
             {
+                // Disable editing
                 ProductList = new SelectList(products, "Id", "Name", editBugReportViewModel.ProductId, products.Select(t => t.Id));
                 SeverityList = new SelectList(severity, "Id", "Name", editBugReportViewModel.SeverityId, severity.Select(t => t.Id));
                 PriorityList = new SelectList(priority, "Id", "Name", editBugReportViewModel.PriorityId, priority.Select(t => t.Id));
@@ -146,6 +151,7 @@ namespace BugMania.Controllers.BugReport
                 selectItem.First(t => t.Text == "INVALID").Disabled = false;
                 selectItem.First(t => t.Text == "DUPLICATE").Disabled = false;
             }
+            // Only developers assigned to the bug report
             else if (User.IsInRole("Developer") &&
                 assignees.FirstOrDefault(i => i.Id == User.Identity.GetUserId()) != null)
             {

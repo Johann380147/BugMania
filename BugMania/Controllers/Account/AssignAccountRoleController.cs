@@ -43,7 +43,10 @@ namespace BugMania.Controllers.Account
         {
             if (ModelState.IsValid)
             {
-                if (userEntity.UpdateUsersRole(assignAccountRoleViewModel) == false) throw new Exception();
+                if (userEntity.UpdateUsersRole(assignAccountRoleViewModel) == false)
+                {
+                    throw new Exception("Could not update user roles.");
+                }
             }
             return Redirect("/Account/Role/Assign");
         }

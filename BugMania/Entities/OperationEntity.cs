@@ -21,7 +21,16 @@ namespace BugMania.Entities
 
         public string GetTypeOfOperation(int id)
         {
-            return db.Operations.FirstOrDefault(i => i.Id == id).Type;
+            var op = db.Operations.FirstOrDefault(i => i.Id == id);
+
+            if (op != null)
+            {
+                return op.Type;
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
     }
 }

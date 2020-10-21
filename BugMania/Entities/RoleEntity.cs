@@ -29,20 +29,31 @@ namespace BugMania.Entities
         {
             var result = db.Roles
                 .Where(n => n.Name == roleName)
-                .FirstOrDefault()
-                .Id;
+                .FirstOrDefault();
 
-            return result;
+            if (result != null)
+            {
+                return result.Id;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public string GetRoleName(int id)
         {
             var result = db.Roles
                 .Where(i => i.Id == id)
-                .FirstOrDefault()
-                .Name;
-
-            return result;
+                .FirstOrDefault();
+            if (result != null)
+            {
+                return result.Name;
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
     }
 }

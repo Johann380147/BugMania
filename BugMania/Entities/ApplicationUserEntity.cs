@@ -52,24 +52,23 @@ namespace BugMania.Entities
                 .Include(b => b.Role)
                 .FirstOrDefault(i => i.UserName == username);
 
-            return user.Role;
+            if (user != null)
+            {
+                return user.Role;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public ApplicationUser GetUserWithGroup (string id)
         {
-            try
-            {
                 var user = db.Users
-                .Where(u => u.Id == id)
-                .Include(g => g.Groups)
-                .Single();
-                return user;
-            }
-            catch
-            {
-                return null;
-            }
-            
+                    .Where(u => u.Id == id)
+                    .Include(g => g.Groups)
+                    .SingleOrDefault();
+                return user;   
         }
 
         public bool VerifyUserRole(string email, string role)
@@ -122,17 +121,20 @@ namespace BugMania.Entities
             {
                 var user = context.Users.Include(r => r.Role)
                     .FirstOrDefault(i => i.Id == userVM.Id);
-                user.RoleId = userVM.RoleId;
-                lst.Add(user);
+                if (user != null)
+                {
+                    user.RoleId = userVM.RoleId;
+                    lst.Add(user);
+                }
             }
             try
             {
                 context.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                throw ex;
+                return false;
             }
         }
 

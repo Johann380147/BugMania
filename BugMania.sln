@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugMania", "BugMania\BugMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugMania.Shapes", "Reports.Entities\BugMania.Shapes.csproj", "{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugManiaTests", "BugManiaTests\BugManiaTests.csproj", "{8F6861D7-E428-47F4-B52C-70DCA1815469}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6371207-7BCA-4A8F-9E3E-FC90B832A87E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F6861D7-E428-47F4-B52C-70DCA1815469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F6861D7-E428-47F4-B52C-70DCA1815469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F6861D7-E428-47F4-B52C-70DCA1815469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F6861D7-E428-47F4-B52C-70DCA1815469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
