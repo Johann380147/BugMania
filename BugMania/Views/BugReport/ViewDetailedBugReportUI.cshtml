@@ -10,10 +10,8 @@
 }
 
 
+<a href="@Request.UrlReferrer.ToString()" class="glyphicon glyphicon-arrow-left btn-link-text font-size-25" title="Back"></a>
 
-@Html.ActionLink(" ", "ViewAllReports", "ViewAllBugReport", null,
-    new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
-        Title = "Back" })
 <div class="report">
     <div class="report-title">
         @Model.Title

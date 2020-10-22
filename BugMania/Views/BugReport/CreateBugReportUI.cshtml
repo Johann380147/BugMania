@@ -9,10 +9,7 @@
                         "**Actual Result:**";
 }
 
-
-@Html.ActionLink(" ", "ViewAllReports", "ViewAllBugReport", null,
-    new { @class = "glyphicon glyphicon-arrow-left btn-link-text font-size-25",
-        Title = "Back" })
+<a href="@Request.UrlReferrer.ToString()" class="glyphicon glyphicon-arrow-left btn-link-text font-size-25" title="Back"></a>
 
 <div class="m-b-10p">
     <div class="col-md-2"></div>
