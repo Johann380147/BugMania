@@ -1,5 +1,6 @@
 ﻿@model BugMania.Models.DetailsBugReportViewModel
 
+@using Microsoft.AspNet.Identity
 @using BugMania.Helpers;
 @using BugMania.Models;
 @using BugMania.Helpers;
@@ -35,7 +36,7 @@
                 @Html.LabelFor(model => model.Assignees, "Assignees", htmlAttributes: new { @class = "card-info-bold" }):
                 @if (Model.Assignees.Count() == 0)
                 {<span>None</span>}
-                @{ 
+                @{
                     int count = 1;
                     foreach (var assignee in Model.Assignees)
                     {
@@ -67,7 +68,7 @@
         @if (Model.LastEditDateTime != null)
         {
             <label class="report-footer-edit">
-                Edited 
+                Edited
                 @DateTimeHelpers.getLocalTime(Model.LastEditDateTime)
             </label>
         }
@@ -83,9 +84,19 @@
             }
         </div>
         <div>
+            @if (Model.Subscribers.Where(i => i.Id == User.Identity.GetUserId()).FirstOrDefault() == null)
+            {
+                @Html.ActionLink("Subscribe", "AddSubscription", "AddSubscriptionBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
+            }
+            else
+            {
+                @Html.ActionLink("Unsubscribe", "RemoveSubscription", "RemoveSubscriptionBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
+            }
+
             @if (User.IsInRole("Admin") ||
                 User.IsInRole("Triager"))
             {
+                <label>|</label>
                 @Html.ActionLink("Edit", "EditReport", "EditBugReport", new { id = Model.Id }, new { @class = "m-r-5" })
                 <label>|</label>
                 @Html.ActionLink("Delete", "Delete", "DeleteBugReport", new { id = Model.Id }, new { })
@@ -93,6 +104,7 @@
             else if (User.IsInRole("Reviewer") ||
             User.IsInRole("Developer"))
             {
+                <label>|</label>
                 @Html.ActionLink("Edit", "EditReport", "EditBugReport", new { id = Model.Id }, new { })
             }
 
@@ -130,3 +142,4 @@
     }
 
 </div>
+

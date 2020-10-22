@@ -3,37 +3,49 @@
 {
     using (Html.BeginForm("LogOff", "LogOffAccount", FormMethod.Post, new { id = "logoutForm" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <a href="#" 
-               class="dropdown-toggle"
-               data-toggle="dropdown" 
-               role="button" 
-               aria-haspopup="true" 
-               aria-expanded="false">
-            @User.Identity.GetUserName() 
-            <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <div>
+                    <span class="noti glyphicon glyphicon-bell"><span class="count">&nbsp;</span></span>
+                    <div class="noti-content">
+                        <div class="noti-top-arrow"></div>
+                        <ul id="noti-list"></ul>
+                        <div id="noti-footer">Dismiss all</div>
+                    </div>
+                </div>
+                
+            </li>
 
-                <li>
-                    @Html.ActionLink("Groups", "View", "ViewGroup", routeValues: null, htmlAttributes: new { title = "Groups" })
-                </li>
-                @if (User.IsInRole("Admin"))
-                {
+            <li class="dropdown">
+                <a href="#"
+                   class="dropdown-toggle"
+                   data-toggle="dropdown"
+                   role="button"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    @User.Identity.GetUserName()
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+
                     <li>
-                        @Html.ActionLink("Roles", "Assign", "AssignAccountRole", routeValues: null, htmlAttributes: new { title = "Roles" })
+                        @Html.ActionLink("Groups", "View", "ViewGroup", routeValues: null, htmlAttributes: new { title = "Groups" })
                     </li>
-                }
-                <li><span class="custom-divider"></span></li>
-                <li>@Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            </ul>
-        </li>
-        <li class="nav-item"></li>
-    </ul>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            @Html.ActionLink("Roles", "Assign", "AssignAccountRole", routeValues: null, htmlAttributes: new { title = "Roles" })
+                        </li>
+                    }
+                    <li><span class="custom-divider"></span></li>
+                    <li>@Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"></li>
+        </ul>
     }
 }
 else

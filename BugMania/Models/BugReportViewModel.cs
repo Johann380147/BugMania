@@ -48,6 +48,7 @@ namespace BugMania.Models
             this.Tags = bugReport.Tags;
             this.Comments = bugReport.Comments;
             this.Assignees = bugReport.Assignees;
+            this.Subscribers = bugReport.Subscribers;
         }
 
         [Key]
@@ -80,6 +81,9 @@ namespace BugMania.Models
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<ApplicationUser> Assignees { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public ICollection<ApplicationUser> Subscribers { get; set; }
 
 
         public ICollection<Comment> getCommentsDescending

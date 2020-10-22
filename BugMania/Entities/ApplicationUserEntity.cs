@@ -34,6 +34,17 @@ namespace BugMania.Entities
             return user;
         }
 
+        public ApplicationUser GetUserByIdNoTracking(string id)
+        {
+            ApplicationUser user;
+
+            user = db.Users
+                .AsNoTracking()
+                .FirstOrDefault(i => i.Id == id);
+
+            return user;
+        }
+
         public ApplicationUser GetUserByEmail(string email, ApplicationDbContext context)
         {
             ApplicationUser user;

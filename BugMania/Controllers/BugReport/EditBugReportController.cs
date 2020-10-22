@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using BugMania.Models;
 using BugMania.Helpers;
 using BugMania.Entities;
+using BugMania.Hubs;
 
 namespace BugMania.Controllers.BugReport
 {
@@ -86,6 +87,16 @@ namespace BugMania.Controllers.BugReport
                 {
                     throw new Exception("Could not update report.");
                 }
+
+                var bugReport = bugReportEntity.GetSingleBugReport(editBugReportViewModel.Id);
+                if (bugReport.Subscribers != null &&
+                    bugReport.Subscribers.Count > 0)
+                {
+                    var usersId = bugReport.Subscribers.Select(i => i.UserName).ToList();
+                    UserHub.NotifyBugReportChangeToSubscribers(usersId, editBugReportViewModel.Id, editBugReportViewModel.Title, "Update");
+                }
+                
+
                 return Redirect("/Report/Details/" + editBugReportViewModel.Id);
             }
 

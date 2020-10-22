@@ -28,9 +28,8 @@
 
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Logs", "ViewAllLogs", "ViewLog")</li>
-                @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
             </ul>
+
             @Html.Partial("_LoginPartial")
         </div>
     </div>
@@ -44,7 +43,109 @@
         </div>*@
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/signalR")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("Scripts", required: false)
+
+    <script src="/signalr/hubs"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            // Create a proxy to signalr hub on web server. It references the hub.
+            var notificationFromHub = $.connection.UserHub;
+            
+            // Connect to signalr hub
+            $.connection.hub.start()
+                .done(function () {
+                    console.log('connected to signlr');
+                })
+                .fail(function () {
+                    console.log('Could not Connect!');
+                });
+
+            // Notify clients on recent updates
+            notificationFromHub.client.UpdateSubscribers = function (id, title, operation) {
+                updateNotification(id, title, operation);
+                updateNotificationCount();
+            };
+
+            getStoredNotifications();
+            
+            // Show/hide notifications
+            $('span.noti').click(function (e) {
+                e.stopPropagation();
+                if ($("#noti-list li").length != 0) {
+                    $('.noti-content').toggle();
+                }
+            })
+
+            // Hide notifications when clicking anywhere else
+            $('html').click(function () {
+                $('.noti-content').hide();
+            })
+
+            $('#noti-footer').click(function () {
+                clearNotifications();
+            });
+
+            // Update notifications count
+            function updateNotificationCount() {
+                var count = $('#noti-list li').length
+
+                if (count > 0) {
+                    $('span.count').html(count);
+                }
+                else {
+                    $('span.count').html("");
+                }
+            }
+
+            // Update notifications
+            function updateNotification(id, title, operation) {
+                $('#noti-list').append($('<li><a class="block-link" href="/Report/Details/' + id + '"><div><label class="noti-label">' + operation + '</label>' + title + '</div></a></li>'));
+                storeNotification({
+                    Id: id,
+                    Title: title,
+                    Operation: operation
+                });
+            }
+
+            function storeNotification(item) {
+                var storedNotifications = localStorage.getItem("notificationList");
+                var notifications = storedNotifications ? JSON.parse(storedNotifications) : [];
+                
+                notifications.push({
+                    Id: item.Id,
+                    Title: item.Title,
+                    Operation: item.Operation
+                });
+                localStorage.setItem("notificationList", JSON.stringify(notifications));
+            }
+
+            function getStoredNotifications() {
+                var storedNotifications = localStorage.getItem("notificationList");
+                var notifications = storedNotifications ? JSON.parse(storedNotifications) : [];
+                
+                for (var item of notifications) {
+                    if (item.Operation == "Comment") {
+                        $('#noti-list').append($('<li><a class="block-link" href="/Report/Details/' + item.Id + '"><div><label class="noti-label-comment">' + item.Operation + '</label>' + item.Title + '</div></a></li>'));
+                    }
+                    else {
+                        $('#noti-list').append($('<li><a class="block-link" href="/Report/Details/' + item.Id + '"><div><label class="noti-label-update">' + item.Operation + '</label>' + item.Title + '</div></a></li>'));
+                    }
+                }
+                updateNotificationCount();
+            }
+
+            function clearNotifications() {
+                localStorage.removeItem("notificationList");
+                $("#noti-list").empty();
+                updateNotificationCount();
+            }
+        });
+    </script>
+
+
 </body>
 </html>

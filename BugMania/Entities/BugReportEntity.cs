@@ -70,6 +70,7 @@ namespace BugMania.Entities
                                     .Include(b => b.Tags)
                                     .Include(b => b.Comments.Select(c => c.Commenter))
                                     .Include(b => b.Assignees)
+                                    .Include(b => b.Subscribers)
                                     .Include(b => b.EditLog)
                                     .First(b => b.Id == id);
 
@@ -191,7 +192,63 @@ namespace BugMania.Entities
                 return false;
             }
         }
-        
+
+        public bool AddSubscriber(int bugReportId, string userId)
+        {
+            var bugReport = this.GetSingleBugReport(bugReportId);
+            var user = db.Users.FirstOrDefault(i => i.Id == userId);
+
+
+            if (bugReport != null && user != null)
+            {
+                bugReport.Subscribers.Add(user);
+
+                try
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveSubscriber(int bugReportId, string subscriberId)
+        {
+            var bugReport = GetSingleBugReport(bugReportId);
+            
+            var user = db.Users.FirstOrDefault(i => i.Id == subscriberId);
+
+            if (bugReport != null && user != null)
+            {
+                foreach (var subscriber in bugReport.Subscribers.Where(i => i.Id.Contains(user.Id)).ToList())
+                {
+                    bugReport.Subscribers.Remove(subscriber);
+                }
+
+                try
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         public bool DeleteBugReport(int id)
         {
             try

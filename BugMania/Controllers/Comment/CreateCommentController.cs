@@ -11,6 +11,7 @@ using BugMania.DataContexts;
 using BugMania.Shapes;
 using BugMania.Models;
 using BugMania.Entities;
+using BugMania.Hubs;
 using Microsoft.AspNet.Identity;
 
 namespace BugMania.Controllers.Comment
@@ -18,6 +19,7 @@ namespace BugMania.Controllers.Comment
     public class CreateCommentController : Controller
     {
         CommentEntity commentEntity = new CommentEntity();
+        BugReportEntity bugReportEntity = new BugReportEntity();
 
         // GET: Comment/Create
         public ActionResult Create()
@@ -41,6 +43,14 @@ namespace BugMania.Controllers.Comment
                 }
 
                 commentEntity.AddComment(createCommentViewModel);
+
+                var bugReport = bugReportEntity.GetSingleBugReport(createCommentViewModel.BugReportId);
+                if (bugReport.Subscribers != null &&
+                    bugReport.Subscribers.Count > 0)
+                {
+                    var usersId = bugReport.Subscribers.Select(i => i.UserName).ToList();
+                    UserHub.NotifyBugReportChangeToSubscribers(usersId, createCommentViewModel.BugReportId, createCommentViewModel.Content, "Comment");
+                }
 
                 return Redirect(Request.UrlReferrer.ToString());
             }

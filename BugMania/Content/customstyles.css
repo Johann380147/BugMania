@@ -244,3 +244,113 @@ ul.navbar-nav li.dropdown a.dropdown-toggle:active {
     color: #000;
     margin: auto;
 }
+
+
+span.noti {
+    margin: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+span.count {
+    position: relative;
+    top: -15px;
+    font-size: 10px;
+    color: #fff;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.noti-content {
+    position: absolute;
+    width: 200px;
+    top: 52px;
+    left: 3px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+.noti-top-arrow {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    left: 10px;
+    top: -7px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+ul#noti-list {
+    max-height: 200px;
+    overflow: auto;
+    padding: 0px;
+    margin: 0px;
+}
+
+ul#noti-list li {
+    max-height: 50px;
+    list-style: none;
+    border-bottom: 1px solid #9E988B;
+}
+
+.block-link {
+    display: block;
+}
+
+.block-link div {
+    max-height: 48px;
+    padding:5px;
+    font-size: 12px;
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px;
+}
+
+.block-link div:hover {
+    color: #000;
+    background-color: #eee;
+}
+
+.block-link:link,
+.block-link:hover,
+.block-link:visited,
+.block-link:active {
+    color: #000;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.noti-label-comment {
+    color: #f6b05e;
+    margin-right:10px;
+}
+
+.noti-label-update {
+    color: #2ea0e6;
+    margin-right: 10px;
+}
+
+.noti-label-comment:hover,
+.noti-label-update:hover {
+    cursor:pointer;
+}
+
+#noti-footer {
+    color: #606060;
+    font-size: 11px;
+    text-align: center;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #f6f6f6;
+}
+
+#noti-footer:hover {
+    background-color: #ffe3c1;
+    border: 1px solid #fff2db;
+    color: #000;
+}
